@@ -69,7 +69,7 @@ const addScore = () => {
                   </label>
                 </div>
               </div>
-              <div className="col">
+             {quiz.option3!='0'?<div className="col">
               <div className="form-check">
                   <input
                     className="form-check-input"
@@ -83,8 +83,8 @@ const addScore = () => {
                     {quiz.option3}
                   </label>
                 </div>
-              </div>
-              <div className="col">
+              </div>:''}
+              {quiz.option4!='0'?<div className="col">
               <div className="form-check">
                   <input
                     className="form-check-input"
@@ -98,7 +98,7 @@ const addScore = () => {
                     {quiz.option4}
                   </label>
                 </div>
-              </div>
+              </div>:''}
             </div>
             <div className="row my-1">
               <div className="col">Title : {quiz.title}</div>

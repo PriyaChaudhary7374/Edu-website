@@ -11,7 +11,7 @@ const About = () => {
   return (
     <>
      <Navbar/>
-     <Hero cName="hero" heroImg={image} title="About"  btnClass="hide"/>
+     <Hero cName="hero" heroImg={image}  btnClass="hide"/>
      <AboutUs/>
      <Footer/>
     

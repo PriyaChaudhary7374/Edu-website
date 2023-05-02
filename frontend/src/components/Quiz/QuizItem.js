@@ -18,12 +18,13 @@ const { deleteQuiz } = context;
             <div className="col">
             <ul><li>{quiz.option2}</li></ul>
             </div>
+            {quiz.option3!='0'?
             <div className="col">
             <ul><li>{quiz.option3}</li></ul>
-            </div>
-            <div className="col">
+            </div>:''}
+           { quiz.option4!='0'?<div className="col">
             <ul><li>{quiz.option4}</li></ul>
-            </div>
+            </div>:''}
           </div>
           <div className="row my-1">
             <div className="col">Answer is : {quiz.answer}</div>

@@ -10,6 +10,8 @@ import NotFound from "../components/community/not-found";
 import NewPost from "../components/community/createpost";
 import ProtectedRoute from "../components/common/protectedRoute";
 import PostPage from "../components/community/PostPage";
+import Navbar from "../components/Navbar/Navbar";
+import Footer from "../components/Footer/Footer";
 
  class Discussions extends Component{
   state = {};
@@ -25,6 +27,7 @@ import PostPage from "../components/community/PostPage";
   render() {
     return (
       <div>
+        <Navbar/>
 
         {/* on the dashboard, have a quesry string parameter to 
        to find the method of sorting of posts.(using query string package) */}
@@ -48,6 +51,7 @@ import PostPage from "../components/community/PostPage";
          
           
         </Switch>
+        <Footer/>
       </div>
     );
   }

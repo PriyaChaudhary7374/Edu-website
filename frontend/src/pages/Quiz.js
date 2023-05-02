@@ -8,6 +8,8 @@ import Alert from "../components/Quiz/Alert";
 import PlayQuizEntry from "../components/Quiz/PlayQuizEntry";
 
 import{ useState } from 'react';
+import Navbar from "../components/Navbar/Navbar";
+import Footer from "../components/Footer/Footer";
 
 
 const Quiz=()=> {
@@ -23,6 +25,7 @@ const Quiz=()=> {
   }
   return (
     <>
+    <Navbar/>
       <QuizState>
           <Alert alert={alert}/>
           <div className="container">
@@ -31,6 +34,7 @@ const Quiz=()=> {
               </div>
        
       </QuizState>
+      <Footer/>
     </>
   );
 }

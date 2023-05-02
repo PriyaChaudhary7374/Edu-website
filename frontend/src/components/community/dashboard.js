@@ -61,7 +61,7 @@ class Dashboard extends Component {
     const filtered = selectedTag._id === "1" ? allposts : this.getPosts();
     const posts = paginate(filtered, currentPage, pageSize);
     if (allposts.length === 0)
-      return <p>There are no posts in the database!</p>;
+      return <p><b>There are no posts in the database!</b></p>;
     return (
       <React.Fragment>
        
@@ -69,13 +69,14 @@ class Dashboard extends Component {
           <div className="row">
             <div className="col">
             <img className="rounded mx-auto d-block img-fluid abcdef my-3" src={image} alt=""/>
-            <h2 className="my-3">The aim of argument, or of discussion, should not be victory but</h2>
-            <h2 className="text-center">progress...</h2>
+            <h2 className="my-3"><b>The aim of argument, or of discussion, should not be victory but</b></h2>
+            <h2 className="text-center"><b>progress...</b></h2>
            
             <hr className="my-4"/>
               <div className="d-flex w-100 justify-content-between m-3">
+
                 
-                Showing {filtered.length} posts.
+                <h6><b>Showing {filtered.length} posts.</b></h6>
                 {user && (
                   <Link to="/discussions/new-post">
                     <button

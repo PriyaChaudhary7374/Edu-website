@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { Button } from './Button';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
+import "./Dropdown.css"
 import Dropdown from './Dropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import Navlinks from './Navlinks';
 
 function Navbar() {
   const auth=localStorage.getItem('token');
@@ -39,80 +41,8 @@ function Navbar() {
          LOGO
          
         </Link>
-        <div className='menu-icon' onClick={handleClick}>
-         {click?<FontAwesomeIcon icon={faTimes}/>:<FontAwesomeIcon icon={faBars}/>}
-        </div>
-        <ul className={click ? 'nav-menu active' : 'nav-menu'}>
-          <li className='nav-item'>
-            <Link to='/notes' className='nav-links' onClick={closeMobileMenu}>
-              Notes
-            </Link>
-          </li>
-          <li
-            className='nav-item'
-            onMouseEnter={onMouseEnter}
-            onMouseLeave={onMouseLeave}
-          >
-            <Link
-              to='/quiz'
-              className='nav-links'
-              onClick={closeMobileMenu}
-            >
-              Widgets <i className='fas fa-caret-down' />
-            </Link>
-            {dropdown && <Dropdown/>}
-          </li>
-          <li className='nav-item'>
-            <Link
-              to='/community'
-              className='nav-links'
-              onClick={closeMobileMenu}
-            >
-              Community
-            </Link>
-          </li>
-          <li className='nav-item'>
-            <Link
-              to='/about'
-              className='nav-links'
-              onClick={closeMobileMenu}
-            >
-              About Us
-            </Link>
-          </li>
-        {auth? <li>
-          <Link
-                 to='/profile'
-              className='nav-links-mobile'
-              onClick={closeMobileMenu}
-            >
-              Profile
-            </Link>
-            <Link
-              to='/logout'
-              className='nav-links-mobile'
-              onClick={closeMobileMenu}
-            >
-              Logout
-            </Link>
-          </li>: <li>
-          <Link
-                 to='/login'
-              className='nav-links-mobile'
-              onClick={closeMobileMenu}
-            >
-              Login
-            </Link>
-            <Link
-              to='/signup'
-              className='nav-links-mobile'
-              onClick={closeMobileMenu}
-            >
-              Sign Up
-            </Link>
-          </li>}  
-          </ul>
-        <Button />
+       <Navlinks/>
+         <Button/>
       </nav>
     </>
   );

@@ -59,7 +59,7 @@ class NewPost extends Form {
       <React.Fragment>
         <ToastContainer />
         <div className="container-lg">
-          <h1 className="text-center m-2">Create a New Discussion</h1>
+          <h1 className="text-center m-2"><b>Create a New Discussion</b></h1>
           <div
             className="container m-4 p-4 rounded"
             style={{ backgroundColor: "#F1F1F1" }}

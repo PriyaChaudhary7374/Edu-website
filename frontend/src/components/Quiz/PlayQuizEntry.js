@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { json } from 'react-router-dom';
 import Game from './Game';
+import Footer from '../Footer/Footer';
+import Navbar from '../Navbar/Navbar';
+
 
 
 const PlayQuizEntry = () => {
@@ -60,7 +63,10 @@ const PlayQuizEntry = () => {
 
 
   return (
+    <>
+    <Navbar/>
     <div className="mx-3 my-5 text-center ">
+    
       <h1 className="my-5">Welcome to QUIZOID!!</h1>
       <hr/>
       <h2 className="my-5">Enter the code and start playing</h2>
@@ -99,6 +105,8 @@ const PlayQuizEntry = () => {
     <a href="http://localhost:3000/playquiz" className="btn btn-danger my-2" tabIndex="-1" role="button">RESET</a>
     </div>
     </div>
+    <Footer/>
+    </>
   )
 }
 

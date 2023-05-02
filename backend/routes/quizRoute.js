@@ -36,8 +36,6 @@ router.post(
     body("question", "Enter the question properly").isLength({ min: 5 }),
     body("option1", "option1 must atleast 3 characters").isLength({ min: 3 }),
     body("option2", "option1 must atleast 3 characters").isLength({ min: 3 }),
-    body("option3", "option1 must atleast 3 characters").isLength({ min: 3 }),
-    body("option4", "option1 must atleast 3 characters").isLength({ min: 3 }),
     body("answer", "answer must atleast 3 characters").isLength({ min: 3 }),
   ],
   async (req, res) => {

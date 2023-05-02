@@ -8,7 +8,7 @@ const Pagination = () => {
     <>
       <div className="pagination-btn">
         <button className="butn" onClick={() => getPrevPage()}>PREV</button>
-        <p>
+        <p className="pagi">
           {page + 1} of {nbPages}
         </p>
         <button className="butn" onClick={() => getNextPage()}>NEXT</button>

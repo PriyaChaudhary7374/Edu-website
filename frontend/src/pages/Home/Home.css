@@ -1,6 +1,14 @@
 html, body {
     max-width: 100%;
     overflow-x: hidden;
+    background: repeating-linear-gradient(
+        50deg,
+       white,
+        white 40px,
+        #faf4ff 100px,
+        white 60px
+      );
+      
 }
 .hero
 {
@@ -10,7 +18,12 @@ html, body {
     z-index:5000;
     overflow: hidden;
    
+   
 }
+
+
+
+
 
 img{
     width:100%;
@@ -68,6 +81,8 @@ img{
    
     
 }
+
+
 
 @media screen and (max-width:1245px)
 {

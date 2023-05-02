@@ -4,9 +4,18 @@ import {memo} from "react";
 
 const AboutUs = () => {
   return (
-    <div className="about-content">
-        <h1>Our History</h1>
-        <p>A remarkable about page is genuine, approachable, and distinguished. Visitors should get a glimpse into what working with you might be like. You can include personal interests, stories, and photos that convey the unique story of your business. You may also include information about who’s on your team and what their roles are.About pages are personal to you and your company, so the structure of your about page will vary based on what you want to highlight. However, you’ll start with the same writing process.</p>
+    <div className="about-content" >
+        <h1><b>Our Mission</b></h1>
+        <h3><b>Increased Engagement</b></h3>
+        <p> Interactivity makes learning more engaging and fun. When learners can interact with the content, they are more likely to stay focused and interested in the material.</p>
+        <h3><b>Deeper Understanding</b></h3>
+        <p> Interactivity can help learners to develop a deeper understanding of the material by allowing them to explore and manipulate concepts in a more hands-on way. </p>
+        <h3><b>Greater Retention</b></h3>
+        <p> Interactive learning is often more memorable than passive learning, which can improve retention of information over time. Interactive elements such as quizzes and games can also help learners to test their knowledge .</p>
+        <h3><b>Customized Learning</b></h3>
+        <p> Interactivity can allow learners to customize their learning experience to their individual needs and preferences.</p>
+        <h3><b>Collaborative Learning</b></h3>
+        <p>Interactivity can facilitate collaboration and knowledge-sharing among learners. Interactive elements such as discussion forums and group projects can help learners to exchange ideas, ask questions, and work together to solve problems.</p>
     </div>
   )
 }

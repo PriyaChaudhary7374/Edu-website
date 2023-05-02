@@ -4,6 +4,8 @@ import quizContext from "../../context/quizContext";
 import {Link, useLocation} from "react-router-dom"
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import Navbar from "../Navbar/Navbar";
+import Footer from "../Footer/Footer";
 
 
 
@@ -108,11 +110,14 @@ const test = () =>{
     setQuiz({ ...quiz, [e.target.name]: e.target.value }); 
   };
   return (
-    <div>
+    
+    <>
+     
+    
       <div className="container my-3">
         <ToastContainer/>
        
-        <h2>Add your Quiz</h2> 
+        <h2><b>Add your Quiz</b></h2> 
         <Link to="/playquiz" className="btn btn-primary float-end" tabIndex="-1" role="button" >Play Quiz</Link>
         
        
@@ -120,15 +125,21 @@ const test = () =>{
             
         {/* http://localhost:1000/api/quiz/codeupdate */}
         <a onClick={test} className="btn btn-primary " tabIndex="-1" role="button">Publish</a>
-        <h3 className="my-3 text-success text-center">Click on publish to generate a code for your quiz </h3>
-        <h3 className="text-center text-success">{gcode}</h3>
-     
+        <h3 className="my-3 text-success text-center"><b>Click on publish to generate a code for your quiz</b> </h3>
+        <h3 className="text-center text-success"><b>{gcode}</b></h3>
         
+        <select className="form-select w-25" aria-label="Default select example">
+  <option selected>Open this select menu</option>
+  <option value="1" default>Text</option>
+  <option value="2">Images</option>
+ 
+</select>
+
         
         <div className="mb-3 my-2">
           <label htmlFor="title" className="form-label">
             {" "}
-            Question{" "}
+            <b>Question{" "}</b>
           </label>
           <input
             type="text"
@@ -146,7 +157,7 @@ const test = () =>{
           <div className="mb-3">
             <label htmlFor="title" className="form-label">
               {" "}
-              Title{" "}
+              <b>Title{" "}</b>
             </label>
             <input
               type="text"
@@ -162,12 +173,15 @@ const test = () =>{
           </div>
         </div>
 
+        <h4 className="text-center my-3"><b>YOUR OPTIONS</b></h4>
+        <p className="text-center my-3"><b>Note : If true/false kind of question enter 0 in remaining options</b></p>
+
         <div className="row gx-5">
           <div className="col">
             <div className="mb-3">
               <label htmlFor="title" className="form-label">
                 {" "}
-                Option 1{" "}
+                <b>Option 1{" "}</b>
               </label>
               <input
                 type="text"
@@ -176,7 +190,7 @@ const test = () =>{
                 name="option1"
                 onChange={onChange}
                 value={quiz.option1}
-                minLength={5}
+                
                 required
                 placeholder="Enter the option1"
               />
@@ -186,7 +200,7 @@ const test = () =>{
             <div className="mb-3">
               <label htmlFor="title" className="form-label">
                 {" "}
-                Option 2{" "}
+                <b>Option 2{" "}</b>
               </label>
               <input
                 type="text"
@@ -195,7 +209,7 @@ const test = () =>{
                 name="option2"
                 onChange={onChange}
                 value={quiz.option2}
-                minLength={5}
+               
                 required
                 placeholder="Enter the option2"
               />
@@ -205,7 +219,7 @@ const test = () =>{
             <div className="mb-3">
               <label htmlFor="title" className="form-label">
                 {" "}
-                Option 3{" "}
+                <b>Option 3{" "}</b>
               </label>
               <input
                 type="text"
@@ -214,8 +228,6 @@ const test = () =>{
                 name="option3"
                 onChange={onChange}
                 value={quiz.option3}
-                minLength={5}
-                required
                 placeholder="Enter the option3"
               />
             </div>
@@ -224,7 +236,7 @@ const test = () =>{
             <div className="mb-3">
               <label htmlFor="title" className="form-label">
                 {" "}
-                Option 4{" "}
+               <b> Option 4{" "}</b>
               </label>
               <input
                 type="text"
@@ -233,8 +245,6 @@ const test = () =>{
                 name="option4"
                 onChange={onChange}
                 value={quiz.option4}
-                minLength={5}
-                required
                 placeholder="Enter the option4"
               />
             </div>
@@ -244,8 +254,8 @@ const test = () =>{
         <div className="row">
           <div className="mb-3">
             <label htmlFor="title" className="form-label">
-              {" "}
-              Answer of the above question{" "}
+              <b>{" "}
+              Answer of the above question{" "}</b>
             </label>
             <input
               type="text"
@@ -267,22 +277,15 @@ const test = () =>{
         
 
         <button
-          disabled={
-            quiz.question.length < 5 ||
-            quiz.option1.length < 3 ||
-            quiz.option2.length < 3 ||
-            quiz.option3.length < 3 ||
-            quiz.option4.length < 3 ||
-            quiz.answer.length < 3
-          }
           type="submit"
           className="btn btn-dark"
           onClick={handleClick}
         >
           Add Quiz
         </button>
+       
       </div>
-    </div>
+    </>
   );
 };
 

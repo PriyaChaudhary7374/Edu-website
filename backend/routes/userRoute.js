@@ -5,6 +5,7 @@ const { body, validationResult } = require("express-validator");
 const bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
 var fetchuser = require('../middleware/fetchuser');
+const cloudinary=require("cloudinary");
 
  const JWT_SECRET = "helloiamsecret"
 
@@ -15,6 +16,7 @@ router.post(
     body("name").isLength({ min: 3 }),
     body("email").isEmail(),
     body("password").isLength({ min: 5 }),
+    
   ],
   async (req, res) => {
     var success = false;
@@ -23,8 +25,17 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
+   
+  
 
     try {
+      const fileStr = req.body.avatar;
+      const uploadResponse = await cloudinary.uploader.upload(fileStr, {
+          upload_preset: 'avatars',
+      });
+      console.log(uploadResponse);
+      
+    
       
       let user = await User.findOne({ email: req.body.email });
       if (user) {
@@ -40,7 +51,13 @@ router.post(
         name: req.body.name,
         email: req.body.email,
         password: secPass,
+        avatarUrl: uploadResponse.secure_url,
+        avatarId:uploadResponse.public_id,
+         
+         
       });
+
+     
      
       const data = {
         user: {
@@ -52,6 +69,7 @@ router.post(
 
       
       success = true;
+      await user.save();
      
       res.json({success,authToken});
 
@@ -123,6 +141,55 @@ router.post(
         res.status(500).send("Internal Server Error")
       }
     });      
+
+   router.put("/updateprofile",fetchuser,async (req, res) => {
+    
+  
+    
+      
+    try{
+      const newData={
+        name:req.body.name,
+        email:req.body.email,
+      }
+
+      if (req.body.avatar !== "") {
+        const user = await User.findById(req.user.id);
+    
+        const imageId = user.avatarId;
+    
+        await cloudinary.v2.uploader.destroy(imageId);
+    
+        const fileStr = req.body.avatar;
+        const uploadResponse = await cloudinary.uploader.upload(fileStr, {
+            upload_preset: 'avatars',
+        });
+    
+      newData.avatarUrl=uploadResponse.secure_url;
+      newData.avatarId=uploadResponse.public_id;
+      }
+      
+        
+        
+      const user = await User.findByIdAndUpdate(req.user.id,newData, {
+        new: true,
+        runValidators: true,
+        useFindAndModify: false,
+      });
+     
+     
+      
+   
+    
+      res.status(200).json({
+        success: true,
+      });
+    }
+    catch (error) {
+      console.error(error.message);
+      res.status(500).send("Internal Server Error")
+    }
+    });
 
 
   

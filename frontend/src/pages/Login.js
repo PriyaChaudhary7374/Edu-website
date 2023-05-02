@@ -34,44 +34,50 @@ const Login = (props) => {
     setcredential({...credential, [e.target.name]: e.target.value})
   }
   return (
-    <div className="container">
-      <h1 className="my-3 text-center">Login</h1>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3 mx-3">
-          <label htmlFor="email" className="form-label mx-3">
-            Email address
-          </label>
-          <input
-            type="email"
-            className="form-control mx-3"
-            id="email"
-            name="email"
-            value={credential.email}
-            onChange={onChange}
-            aria-describedby="emailHelp"
-          />
-          <div id="emailHelp" className="form-text mx-3">
-            We'll never share your email with anyone else.
-          </div>
-        </div>
-        <div className="mb-3 mx-3">
-          <label htmlFor="password" className="form-label mx-3 ">
-            Password
-          </label>
-          <input
-            type="password"
-            className="form-control mx-3"
-            id="password"
-            value={credential.password}
-            onChange={onChange}
-            name="password"
-          />
-        </div>
-        <button type="submit" className="btn btn-primary mx-auto d-block ">
-          Submit
-        </button>
-      </form>
-    </div>
+    <>
+    <div className="updateProfileContainer">
+                <div className="updateProfileBox">
+                  <h2 className="updateProfileHeading">Login</h2>
+    
+                  <form
+                    className="updateProfileForm"
+                    encType="multipart/form-data"
+                    onSubmit={handleSubmit}
+                  >
+                    <div className="updateProfileName">
+                      
+                      <input
+                        type="email"
+                        placeholder="email"
+                        required
+                        name="email"
+                        defaultValue={credential.email}
+                        onChange={onChange}
+                      />
+                    </div>
+                    <div className="updateProfileEmail">
+                       
+                     
+                      <input
+                        type="password"
+                        placeholder="password"
+                        required
+                        name="password"
+                        defaultValue={credential.password}
+                        onChange={onChange}
+                      />
+                    </div>
+    
+                    
+                    <input
+                      type="submit"
+                      value="Submit"
+                      className="updateProfileBtn"
+                    />
+                  </form>
+                </div>
+              </div></>
+   
   );
 };
 

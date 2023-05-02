@@ -7,16 +7,16 @@ import { BrowserRouter as Router,Switch,Route} from "react-router-dom"
 import About from "./pages/About/About.js"
 import Signup from './pages/Signup.js'
 import Login from './pages/Login.js'
-
-
-import "./pages/Notes.css"
-import Notes from './pages/Notes.js';
+import Notes from './pages/Notes/Notes.js';
 import Quiz from "./pages/Quiz.js"
 import Alert from './components/Quiz/Alert.js'
 import Profile from './components/Profile/Profile.js'
 import PlayQuizEntry from './components/Quiz/PlayQuizEntry.js'
 import Community from './pages/Community.js'
 import Discussions from './pages/Discussions.js'
+import Editprofile from './pages/Editprofile.js'
+import Category from './pages/Notes/Category.js'
+import notesEdit from './pages/Notes/notes-edit.js'
 
 
 
@@ -38,9 +38,8 @@ function App () {
 
   return ( 
   <>
-    <div className="alert">
-   <Alert alert={alert}/>
-   </div>
+    
+    
   <Router>
     <Switch>
    
@@ -51,12 +50,16 @@ function App () {
     <Route path="/login" render={(props) => <Login {...props} showAlert={showAlert} />}/>
      <Route path="/signup" render={(props) => <Signup {...props} showAlert={showAlert} />}/>
 
-   <Route path="/notes" component={token?Notes:Login}/> 
+   
+   <Route path='/notes' component={token?Notes:Login} exact={true}/>
+          <Route path='/notes/category' component={Category} exact={true}/>
+          <Route path='/notes/edit/:id' component={notesEdit} />
    <Route path="/quiz" component={token?Quiz:Login}/>
    <Route path="/profile" component={Profile}/>
    <Route  path="/playquiz" component={PlayQuizEntry}/>
    <Route path="/community" component={token?Community:Login}/>
    <Route path="/discussions" component={token?Discussions:Login}/>
+   <Route path="/editprofile" component={Editprofile}/>
    
    
 

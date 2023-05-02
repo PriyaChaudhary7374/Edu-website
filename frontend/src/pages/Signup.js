@@ -1,11 +1,46 @@
 import React, {useState} from "react";
 import { Link, useHistory } from "react-router-dom";
 
+import image from "../images/avatar.jpeg"
+
 const Signup = (props) => {
   const [credential, setcredential] = useState({ name:"", email: "", password: "", confirmpassword:"" });
+  const [fileInputState, setFileInputState] = useState('');
+  const [previewSource, setPreviewSource] = useState(image);
+  const [selectedFile, setSelectedFile] = useState();
+
+  const handleFileInputChange = (e) => {
+    const file = e.target.files[0];
+    previewFile(file);
+    setSelectedFile(file);
+    setFileInputState(e.target.value);
+};
+
+const previewFile = (file) => {
+  const reader = new FileReader();
+  reader.readAsDataURL(file);
+  reader.onloadend = () => {
+      setPreviewSource(reader.result);
+  };
+};
   let history = useHistory();
-  const handleSubmit = async (e) => {
+
+  const handleSubmitFile = (e) => {
     e.preventDefault();
+    if (!selectedFile) return;
+    const reader = new FileReader();
+    reader.readAsDataURL(selectedFile);
+    reader.onloadend = () => {
+        handleSubmit(reader.result);
+    };
+    reader.onerror = () => {
+        console.error('AHHHHHHHH!!');
+        
+    };
+};
+  const handleSubmit = async (base64EncodedImage) => {
+  
+   
     const {name, email, password} = credential
     // console.log(credential);
     const response = await fetch("http://localhost:2000/api/auth/createuser", {
@@ -13,18 +48,20 @@ const Signup = (props) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ name,email, password }),
+      body: JSON.stringify({ name,email, password ,avatar:base64EncodedImage}),
     });
+    setFileInputState('');
+    setPreviewSource('');
     console.log(credential);
     const json = await response.json();
     
     if(json.success){
    //save the auth token and redirect
         localStorage.setItem('token', json.authToken);
-        localStorage.setItem("user", JSON.stringify(response.data));
+       
      
         history.push('/login');
-        props.showAlert("Account crreated successfully", "success")
+        props.showAlert("Account created successfully", "success")
 
     }
     else{
@@ -35,68 +72,97 @@ const Signup = (props) => {
     setcredential({...credential, [e.target.name]: e.target.value})
   }
   return (
-    <div className="container">
-      <h2 className="text-center my-3">Sign Up</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="name" className="form-label">
-            Name
-          </label>
-          <input type="text" 
-          className="form-control" 
-          id="name"  
-          name="name"
-          onChange={onChange} required/>
-        </div>
-        <div className="mb-3">
-          <label htmlFor="exampleInputEmail1" className="form-label">
-            Email address
-          </label>
-          <input
-            type="email"
-            className="form-control"
-            name="email"
-            id="email"
-            onChange={onChange}
-            aria-describedby="emailHelp"
-          />
-          <div id="emailHelp" className="form-text">
-            We'll never share your email with anyone else.
-          </div>
-        </div>
-        <div className="mb-3">
-          <label htmlFor="password" 
-          className="form-label">
-            Password
-          </label>
-          <input type="password"
-          className="form-control" 
-          id="password"
-          name="password" 
-          onChange={onChange} minLength={5} required/>
-        </div>
-        <div className="mb-3">
-          <label htmlFor="password" 
-          className="form-label">
-            Confirm Password
-          </label>
-          <input
-            type="confirmpassword"
-            className="form-control"
-            id="confirmpassword" 
-            name="confirmpassword"
-            onChange={onChange} minLength={5} required
-          />
-        </div>
-        <button type="submit" className="btn btn-primary mx-auto d-block">
-          Submit
-        </button>
-      </form>
-      <div className="login-page">
+    <>
+    <div className="updateProfileContainer">
+                <div className="updateProfileBox">
+                  <h2 className="updateProfileHeading">Sign Up</h2>
+    
+                  <form
+                    className="updateProfileForm"
+                    encType="multipart/form-data"
+                    onSubmit={handleSubmitFile}
+                  >
+                    <div className="updateProfileName">
+                      
+                      <input
+                        type="text"
+                        placeholder="name"
+                        required
+                        name="name"
+                        
+                        onChange={onChange}
+                      />
+                    </div>
+                    <div className="updateProfileEmail">
+                       
+                     
+                      <input
+                        type="email"
+                        placeholder="email"
+                        required
+                        name="email"
+                        
+                        onChange={onChange}
+                      />
+                    </div>
+                    <div className="updateProfileEmail">
+                       
+                     
+                       <input
+                         type="password"
+                         placeholder="password"
+                         required
+                         name="password"
+                         
+                         onChange={onChange} minLength={5}
+                       />
+                     </div>
+                     <div className="updateProfileEmail">
+                       
+                     
+                       <input
+                         type="password"
+                         placeholder="confirm password"
+                         required
+                         name="password"
+                         
+                         onChange={onChange}
+                         minLength={5}
+                       />
+                     </div>
+                     <div id="updateProfileImage">
+                     {previewSource && (
+                <img
+                    src={previewSource}
+                    alt="chosen"
+                    style={{ height: '50px' }}
+                />
+            )}
+                  <input
+                    id="fileInput"
+                    type="file"
+                    name="image"
+                    onChange={handleFileInputChange}
+                    value={fileInputState}
+                    className="form-input"
+                />
+                  </div>
+    
+                    
+                    <input
+                      type="submit"
+                      value="Submit"
+                      className="updateProfileBtn"
+                    />
+                  </form>
+                  <div className="login-page">
       <h3 className="some-text">Already registered?</h3>
       <Link to="/login" className="gotologin">Login</Link>
       </div>
-    </div>
+                </div>
+              </div>
+    </>
+    
   );
 };
 

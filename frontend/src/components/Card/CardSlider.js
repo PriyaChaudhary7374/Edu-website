@@ -69,7 +69,7 @@ const CardSlider = (props) => {
    <>
     
     <div className="abc">
-      <h2>Recent Articles</h2>
+      <h2><b>Recent Articles</b></h2>
       <div className="wrpper">
        
         <div className="flex slider" ref={listRef}>
