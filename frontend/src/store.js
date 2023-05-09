@@ -4,11 +4,13 @@ import notesReducer from './reducer/NoteReducer'
 import categoryReducer from './reducer/CategoryReducer'
 import thunk from 'redux-thunk'
 
+
 const configStore = ()=>{
     const store = createStore(combineReducers({
         // users:usersReducer,
         notes:notesReducer,
-        category:categoryReducer
+        category:categoryReducer,
+        
     }),applyMiddleware(thunk))
     return store
 }

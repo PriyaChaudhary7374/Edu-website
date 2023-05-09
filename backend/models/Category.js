@@ -10,9 +10,12 @@ const categorySchema = new Schema({
         type:Date,
         default:new Date()
     },
+    edit: {
+        type: Boolean,
+        default: true
+      },
     user:{
         type:Schema.Types.ObjectId,
-        required:true,
         ref:'User'
     }
 })

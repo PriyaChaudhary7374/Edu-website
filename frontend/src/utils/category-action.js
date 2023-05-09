@@ -1,5 +1,9 @@
 import Axios from "axios"
 
+export const getCategory = (category) => {
+    return { type: "GET_CATEGORY", payload: category };
+  };
+
 export const setCategory = (data)=>{
     return{type:'SET_CATEGORY',payload:data}
 }
@@ -9,6 +13,9 @@ export const deleteCategory = (data)=>{
 export const postCategory = (data)=>{
     return{type:'POST_CATEGORY',payload:data}
 }
+export const editCategory = (formData, id) => {
+    return { type: "EDIT_CATEGORY", payload: { id: id, data: formData } };
+  };
 
 
 export const startGetCategory = (dispatch)=>{
@@ -33,8 +40,8 @@ export const startPostCategory = (formdata)=>{
             }
         })
         .then(res=>{
-            const category = res.data
-            dispatch(postCategory(category))
+            const chapter = res.data
+            dispatch(postCategory(chapter))
         })
         .catch(err=>alert(err))
     }
@@ -54,3 +61,21 @@ export const startRemoveCategory=(id)=>{
         .catch(err=>alert(err))
     }
 }
+
+
+export const startCategoryEdit = (formData, id) => {
+    return (dispatch) => {
+      Axios
+        .put(`http://localhost:2000/api/category/${id}`, formData, {
+          headers: {
+            "auth-token": localStorage.getItem("token"),
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+          dispatch(editCategory(formData, id));
+        });
+    };
+  };
+  
+  

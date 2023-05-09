@@ -6,7 +6,7 @@ const noteSchema=new Schema({
         type:String,
         default:null,
     },
-    desc:{
+    body:{
         type:String,
         required:true
     },
@@ -15,6 +15,10 @@ const noteSchema=new Schema({
         required:true,
         ref:'User'
     },
+    edit: {
+        type: Boolean,
+        default: false
+      },
   
     category:{
         type:Schema.Types.ObjectId,

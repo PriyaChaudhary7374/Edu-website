@@ -48,8 +48,6 @@ import Footer from "../components/Footer/Footer";
             path="/discussions/post/:id"
             render={(props) => <PostPage {...props} user={this.state.user} />}
           />
-         
-          
         </Switch>
         <Footer/>
       </div>

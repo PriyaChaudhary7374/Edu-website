@@ -62,7 +62,7 @@ router.put("/like/:id", fetchuser, async (req, res) => {
   if (post.author == req.user.id)
     return res.status(400).send("You can't upvote your own post");
   const upvoteArray = post.upvotes;
-  const index = upvoteArray.indexOf(req.user._id);
+  const index = upvoteArray.indexOf(req.user.id);
   if (index === -1) {
     upvoteArray.push(req.user.id);
   } else {

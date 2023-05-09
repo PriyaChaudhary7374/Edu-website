@@ -128,12 +128,7 @@ const test = () =>{
         <h3 className="my-3 text-success text-center"><b>Click on publish to generate a code for your quiz</b> </h3>
         <h3 className="text-center text-success"><b>{gcode}</b></h3>
         
-        <select className="form-select w-25" aria-label="Default select example">
-  <option selected>Open this select menu</option>
-  <option value="1" default>Text</option>
-  <option value="2">Images</option>
- 
-</select>
+        
 
         
         <div className="mb-3 my-2">
@@ -174,7 +169,7 @@ const test = () =>{
         </div>
 
         <h4 className="text-center my-3"><b>YOUR OPTIONS</b></h4>
-        <p className="text-center my-3"><b>Note : If true/false kind of question enter 0 in remaining options</b></p>
+        <p className="text-center my-3"><b>Note : If true/false kind of question enter N in remaining options</b></p>
 
         <div className="row gx-5">
           <div className="col">

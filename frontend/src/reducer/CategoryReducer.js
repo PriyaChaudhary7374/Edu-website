@@ -10,6 +10,13 @@ const CategoryReducer = (state=[],action)=>{
         case('POST_CATEGORY'):{
             return [action.payload,...state]
         }
+        case "EDIT_CATEGORY":{
+            return state.map((ele) =>
+              ele._id === action.payload.id
+                ? Object.assign(ele, {}, action.payload.data)
+                : Object.assign(ele, {})
+            );
+        }
         default:{
             return [...state]
         }

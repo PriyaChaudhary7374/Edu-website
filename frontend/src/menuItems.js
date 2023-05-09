@@ -17,7 +17,8 @@ export const menuItems = [
         },
         {
 
-            title:"Interactive Textbook"
+            title:"Interactive Textbook",
+            url:"/textbook"
         },
         
     ],

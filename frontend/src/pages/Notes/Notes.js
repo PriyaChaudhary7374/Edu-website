@@ -1,91 +1,157 @@
 import React from "react";
 import { connect } from "react-redux";
-import { startPostNotes, startDeleteNotes } from "../../utils/notes-action";
-import Form from "./notes-form";
-import { Link } from "react-router-dom";
+import NotesForm from "./notes-form";
+import { startDeleteNotes } from "../../utils/notes-action";
+import Grid from "@material-ui/core/Grid";
+import Divider from "@material-ui/core/Divider";
+import { makeStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+
+import MainAppBar from "../../components/AppBar";
+import { startGetCategory } from "../../utils/category-action";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
+const useStyles = makeStyles({
+  root: {
+    maxWidth: 375,
+    marginTop: 15,
+    maxHeight: 375,
+  },
+  bullet: {
+    display: "inline-block",
+    margin: "0 2px",
+    transform: "scale(0.8)",
+  },
+  title: {
+    fontSize: 14,
+  },
+  pos: {
+    marginBottom: 12,
+  },
+});
 
 function Notes(props) {
-  
-  const handleClick = formdata => {
-    console.log("hello")
-    console.log(formdata);
-    props.dispatch(startPostNotes(formdata));
+  const classes = useStyles();
+  const [dataId, SetDataId] = React.useState("");
+  const [status, SetStatus] = React.useState("add");
+  const [title, SetTitle] = React.useState("");
+  const [body, SetBody] = React.useState("");
+  const [category, SetCategory] = React.useState("");
+  const handleEdit = (id, title, body, category) => {
+    status === "add" ? SetStatus("edit") : SetStatus("add");
+    status === "edit" ? SetStatus("add") : SetStatus("edit");
+    SetTitle(title);
+    SetBody(body);
+    SetCategory(category);
+    SetDataId(id);
+    console.log(dataId, status);
   };
-  
-  const handleRemove = e => {
-    const target = e.target.value;
-    console.log(target);
-    props.dispatch(startDeleteNotes(target));
+
+  const handleRemove = (id) => {
+    props.dispatch(startDeleteNotes(id));
   };
+
+  const handleBluring = (id) => {
+    props.dispatch(startGetCategory());
+  };
+
   return (
     <>
     <Navbar/>
-    <div className="container">
-      <br/>
-      <h2>Showing Notes-{props.notes.length}</h2>
-      
-      <br/>
-      <div className='row'>
-        <div className='col-md-5'>
-          <Form submit={handleClick} />
-        </div>
-        <div className='col-md-1'></div>
-        <div className='col-md-6'>
-        {props.notes.length==0 ? 
-          <div className="card" style={{width: '100%'}}>
-          <div className="card-body">
-            <h5 className="card-title text-center">No Notes to display</h5>
-          </div>
-        </div>
-        :
-        <div>
-          {props.notes.map((ele, i) => {
-            let a= ele.category.name
-            
-            console.log(props.category)
-            console.log(a = ele.category.name)
-         
-             //console.log('find',props.category.find(ele=>ele.name===a).name)
-            return (
-              <div key={i}>
-                <div  className="card my-3 shadow-lg p-3 mb-5 bg-white rounded" style={{width: '100%'}}>
-                
-                
-                <div className={`card-body text-center`} >
-                  <h5 className={`card-title`}>{ele.title}</h5>
-                  <p className="card-text">{ele.desc}</p>
-            <h3 className="text-center text-success">{ele.category? ele.category.name:''}</h3>
-            <br/>
-                  <button style={{margin:'auto 1%'}} href="#" className="btn btn-danger mx-3" onClick={handleRemove}
-                  value={ele._id}>Remove</button>
-                  <Link to={`/notes/edit/${ele._id}`}><button style={{margin:'1% auto'}} className="btn btn-light mx-3" value={ele._id}>Edit</button></Link>
-                 
-                </div>
-          
-              </div>
-              <br/>
-              </div>
-              
-            )
-          })
-          }</div>}
-        </div>
-        
+      <MainAppBar />
+      <div align="center" style={{ marginTop: "100px" }}>
+        <Grid container component="main">
+          <Grid item xs={12} sm={3}>
+            <Grid container justify="center">
+              <NotesForm
+                id={dataId}
+                title={title}
+                body={body}
+                category={category}
+                status={status}
+                handleBluring={handleBluring}
+              />
+            </Grid>
+          </Grid>
+          <Grid item xs={12} sm={3}>
+            <Divider orientation="vertical" />
+          </Grid>
+
+          <Grid item xs={12} sm={5}>
+            <div>
+              {props.notes !== undefined &&
+                props.notes.map((ele, i) => {
+                  return (
+                    <Card
+                      className={classes.root}
+                      variant="outlined"
+                      style={{
+                        background: i % 2 === 0 ? "#EC7063" : "#A569BD",
+                        boxShadow:50
+                      }}
+                    >
+                      <h3 style={{ color: "white" }}>{ele.title}</h3>
+                      <CardContent>
+                        <Typography
+                          variant="body2"
+                          component="p"
+                          style={{ color: "white" }}
+                        >
+                          {ele.body}
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          component="p"
+                          style={{ color: "white" }}
+                        >
+                          {ele.category?ele.category.name:""}
+                        </Typography>
+                        
+                      </CardContent>
+                      <CardActions>
+                        <Button
+                          size="small"
+                          onClick={() => handleRemove(ele._id)}
+                          variant="outlined"
+                          color="primary"
+                        >
+                          Remove
+                        </Button>
+                        <Button
+                          size="small"
+                          variant="outlined"
+                          color="primary"
+                          onClick={() =>
+                            handleEdit(
+                              ele._id,
+                              ele.title,
+                              ele.body,
+                              ele.category
+                            )
+                          }
+                        >
+                          Edit
+                        </Button>
+                      </CardActions>
+                    </Card>
+                  );
+                })}
+            </div>
+          </Grid>
+        </Grid>
       </div>
-    </div>
-    <Footer/>
+      <Footer/>
     </>
   );
 }
-const stateMapToProps = (state) => {
-  console.log(state);
-  return {
 
-    category:state.category,
-    notes: state.notes
+const mapStateToProps = (state) => {
+  return {
+    notes: state.notes,
   };
 };
-
-export default connect(stateMapToProps)(Notes);
+export default connect(mapStateToProps)(Notes);

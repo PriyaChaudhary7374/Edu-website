@@ -1,14 +1,26 @@
 import axios from 'axios'
 
+export const getNotes = (notes) => {
+    return { type: "GET_NOTES", payload: notes };
+  };
+  
+
 export const setNotes = (notes)=>{
     return{type:'SET_NOTES',payload:notes}
 }
 export const postNotes = (notes)=>{
     return {type:'POST_NOTES',payload:notes}
 }
-export const editNotes = (notes)=>{
-    return {type:'EDIT_NOTES',payload:notes}
-}
+export const editNotes = (data, id) => {
+    return {
+      type: "EDIT_NOTES",
+      payload: {
+        id,
+        data,
+      },
+    };
+  };
+
 export const deleteNotes = (notes)=>{
     return {type:'DELETE_NOTES',payload:notes}
 }
@@ -36,7 +48,8 @@ export const startPostNotes = (formdata)=>{
         }})
             .then(res=>{
                 const notes = res.data
-                dispatch(postNotes(notes))
+                console.log(notes);
+                dispatch(postNotes(formdata))
             })
             .catch(err=>alert(err))
     }
@@ -48,25 +61,25 @@ export const startDeleteNotes = (id)=>{
             headers:{
                 'auth-token':localStorage.getItem('token')
             }
-        })
-            .then(res=>{
+        }).then(res=>{
                 const notes = res.data
                 dispatch(deleteNotes(notes))
             })
             .catch(err=>alert(err))
     }
 }
-export const startEditNotes = (id,formdata)=>{
+export const startEditNotes = (formdata,id)=>{
     return(dispatch)=>{
         axios.put(`http://localhost:2000/api/notes/${id}`,formdata,{
             headers:{
                 'auth-token':localStorage.getItem('token')
             }
-        })
-            .then(res=>{
+        }).then(res=>{
                 const notes = res.data
-                dispatch(editNotes(notes))
+                dispatch(editNotes(formdata))
             })
             .catch(err=>alert(err))
+
+          
     }
 }

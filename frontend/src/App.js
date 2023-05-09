@@ -16,7 +16,12 @@ import Community from './pages/Community.js'
 import Discussions from './pages/Discussions.js'
 import Editprofile from './pages/Editprofile.js'
 import Category from './pages/Notes/Category.js'
-import notesEdit from './pages/Notes/notes-edit.js'
+import BlogPage from './components/views/BlogPage/BlogPage.js'
+import CreatePage from './components/views/BlogPage/Section.js/CreatePage.js'
+import PostPage from './components/views/PostPage/PostPage.js'
+
+
+
 
 
 
@@ -52,8 +57,11 @@ function App () {
 
    
    <Route path='/notes' component={token?Notes:Login} exact={true}/>
-          <Route path='/notes/category' component={Category} exact={true}/>
-          <Route path='/notes/edit/:id' component={notesEdit} />
+          <Route path='/notes/category' component={token?Category:Login} exact={true}/>
+          <Route path="/textbook" component={token?BlogPage:Login}/>
+          <Route path="/create" component={token?CreatePage:Login}/>
+          <Route path="/post/:postId" component={token?PostPage:Login}/>
+         
    <Route path="/quiz" component={token?Quiz:Login}/>
    <Route path="/profile" component={Profile}/>
    <Route  path="/playquiz" component={PlayQuizEntry}/>
