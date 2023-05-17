@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const blogSchema = mongoose.Schema({
+    
     content: {
         type:String,
         required:true
@@ -9,6 +10,12 @@ const blogSchema = mongoose.Schema({
     user: {
         type: Schema.Types.ObjectId,
         ref: 'User'
+    },
+
+    textbookName:{
+        type:Array,
+        ref:'Textbook',
+        required:false,
     }
 }, { timestamps: true })
 

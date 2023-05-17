@@ -2,8 +2,10 @@ const express = require('express');
 const router = express.Router();
 const  Blog = require("../models/Blog");
 
+
 const fetchuser = require("../middleware/fetchuser");
 const multer = require("multer");
+const path=require("path")
 
 // STORAGE MULTER CONFIG
 let storage = multer.diskStorage({
@@ -11,12 +13,12 @@ let storage = multer.diskStorage({
         cb(null, "uploads/");
     },
     filename: (req, file, cb) => {
-        cb(null, `${file.originalname}`);
+        cb(null, `${Date.now()}_${file.originalname}`);
     },
     fileFilter: (req, file, cb) => {
         const ext = path.extname(file.originalname)
-        if (ext !== '.jpeg' && ext !== '.png' && ext !== '.mp4') {
-            return cb(res.status(400).end('only jpeg, png, mp4 is allowed'), false);
+        if (ext !== '.jpg' && ext !== '.png' && ext !== '.mp4') {
+            return cb(res.status(400).end('only jpg, png, mp4 is allowed'), false);
         }
         cb(null, true)
     }
@@ -38,20 +40,17 @@ const upload = multer({ storage: storage }).single("file");
 // size: 24031 
 
 router.post("/uploadfiles", (req, res) => {
-   
     upload(req, res, err => {
         if (err) {
-           
             return res.json({ success: false, err });
-            
         }
-         console.log(res);
         return res.json({ success: true, url: res.req.file.path, fileName: res.req.file.filename });
     });
 });
 
 router.post("/createPost", fetchuser,(req, res) => {
-    let blog = new Blog({ content: req.body.content,user:req.user.id});
+    const bookName=req.query.cat
+    let blog = new Blog({ content: req.body.content,user:req.user.id,textbookName:[bookName]});
     console.log(blog);
 
     blog.save((err, postInfo) => {
@@ -74,7 +73,8 @@ router.post("/createPost", fetchuser,(req, res) => {
 
 
 router.get("/getBlogs", fetchuser,(req, res) => {
-    Blog.find({user:req.user.id})
+    const bookName=req.query.cat
+    Blog.find({user:req.user.id,textbookName:{$in:[bookName]}})
         .exec((err, blogs) => {
             if (err) return res.status(400).send(err);
             res.status(200).json({ success: true, blogs });

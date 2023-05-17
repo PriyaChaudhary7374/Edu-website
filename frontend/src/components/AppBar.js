@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
 import { connect } from "react-redux";
+import zIndex from "@material-ui/core/styles/zIndex";
 const HeadingText = styled.h6`
   font-family: Montserrat;
   font-style: normal;
@@ -22,6 +23,7 @@ const HeadingText = styled.h6`
 const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
+    zIndex:9999,
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -71,6 +73,7 @@ const useStyles = makeStyles((theme) => ({
   },
   sectionDesktop: {
     display: "none",
+    zIndex:1000,
     [theme.breakpoints.up("md")]: {
       display: "flex",
     },
@@ -89,7 +92,7 @@ function MainAppBar(props) {
   return (
     <>
     <div className={classes.grow}>
-      <AppBar position="relative" style={{ height: "70px" }}>
+      <AppBar position="relative" style={{ height: "70px",zIndex:1 }}>
         <Toolbar>
           <div>
             <HeadingText fontSize={18}>
@@ -105,7 +108,7 @@ function MainAppBar(props) {
             </Link>
           </div>
           <div className={classes.sectionDesktop}>
-            <Link to="/notes/category">
+            <Link to="/category">
               <IconButton aria-label="show 17 new notifications">
                 <CategoryIcon color="secondary" />
               </IconButton>

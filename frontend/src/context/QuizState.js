@@ -5,6 +5,7 @@ const QuizState = (props) => {
   const host = "http://localhost:2000"
   const quizsInitial = []
   const [quizs, setQuizs] = useState(quizsInitial)
+  const countquizs=0;
 
   // Get quiz
   const getQuizs = async () => {
@@ -19,12 +20,13 @@ const QuizState = (props) => {
     });
     const json = await response.json() 
     
-    console.log("GET ALL QUIZ" ,json[0].user);
+    console.log("GET ALL QUIZ" ,json.quizs[0].user);
     // console.log("authToken", localStorage.getItem('token'))
-    window.value=json[0].user;
+    window.value=json.quizs[0].user;
    
-    setQuizs(json)
+    setQuizs(json.quizs)
   }
+
 
   // Add a quiz
   const addQuiz = async (question, option1, option2, option3, option4, answer, title) => {
@@ -40,7 +42,8 @@ const QuizState = (props) => {
     });
 
     const quiz = await response.json();
-    setQuizs(quizs.concat(quiz))
+    setQuizs(quizs.concat(quiz));
+    countquizs++;
     // console.log(quiz, "ADD")
 
   }
@@ -59,6 +62,7 @@ const QuizState = (props) => {
     console.log(json, "DEL")
     const newQuizs = quizs.filter((quiz) => { return quiz._id !== id })
     setQuizs(newQuizs)
+    countquizs--;
   }
 
 

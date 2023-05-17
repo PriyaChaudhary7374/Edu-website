@@ -5,6 +5,9 @@ import {EllipsisOutlined, SettingOutlined,EditOutlined, DeleteOutlined} from '@a
 import Navbar from '../../Navbar/Navbar';
 import Footer from '../../Footer/Footer';
 import { Link } from 'react-router-dom/cjs/react-router-dom';
+import Sidebar from '../Sidebar/Sidebar.js'
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import "./bp.css"
 
 const { Title } = Typography
 
@@ -12,6 +15,9 @@ const { Title } = Typography
 function BlogPage() {
 
     const [blogs, setBlogs] = useState([])
+    const [textbooks, setTextbooks] = useState([]);
+    const location = useLocation();
+    const categoryName = new URLSearchParams(location.search).get('cat');
 
     const deletePost=async(id) => {
         // API Call
@@ -33,7 +39,7 @@ function BlogPage() {
       }
 
     useEffect(() => {
-        axios.get('http://localhost:2000/api/getBlogs',{
+        axios.get(`http://localhost:2000/api/getBlogs/?cat=${categoryName}`,{
             headers:{
                 'auth-token':localStorage.getItem('token')
             } 
@@ -46,17 +52,17 @@ function BlogPage() {
                     alert('Couldnt get blog`s lists')
                 }
             })
-    }, [])
+    },[categoryName])
 
     const renderCards = blogs.map((blog, index) => {
         return <Col key={index} lg={8} md={12} xs={24}>
-            <Card
+            <Card className="blog-card"
                 hoverable
-                style={{ width: 370, marginTop: 16 }}  
+                style={{ width: 310, marginTop: 16}}  
                 actions={[
-                    <DeleteOutlined style={{fontSize:'30px'}} onClick={()=>deletePost(blog._id)}/>,
+                    <DeleteOutlined className="ico" style={{fontSize:'30px'}} onClick={()=>deletePost(blog._id)}/>,
 
-                    <a href={`/post/${blog._id}`}> <EllipsisOutlined style={{fontSize:'30px'}} /></a>,
+                    <a href={`/post/${blog._id}`}> <EllipsisOutlined className="ico" style={{fontSize:'30px'}} /></a>,
                 ]}
             >
                
@@ -67,23 +73,34 @@ function BlogPage() {
         </Col>
     })
 
+    useEffect(() => {
+        const getTextbooks = async (e) => {
+           
+            const res = await axios.get("http://localhost:2000/api/bookName")
+            setTextbooks(res.data)
+        }
+        getTextbooks();
+    })
+    
+
+
     return (
         <>
         <Navbar/>
-        <div style={{ width: '85%', margin: '3rem auto' }}>
-        <h1 style={{textAlign:"center"}}> Y O U R&nbsp;&nbsp;&nbsp;&nbsp;T E X T B O O K</h1> 
-            <div style={{display:'flex',justifyContent:'space-between'}}>
-           
-          
-             <Title level={2}> Chapters </Title>
-            <button className="btn btn-lg btn-primary btn-outline-light my-3 mnb">
-          <Link to="/create" className="abcde">Create New Chapter</Link>
+        <div style={{ display:'flex' }}>
+            <Sidebar/>
+            <div style={{ width: '100%', marginLeft: '20px',position:"relative"}}>
+            <h1 style={{color:"blue",textAlign:"center",backgroundColor:"pink"}}>{categoryName}</h1> 
+            
+            <button style={{}} className="btn btn-lg btn-primary btn-outline-light my-3">
+          <Link to={`/create/?cat=${categoryName}`} className="abcde">Add New Chapter</Link>
               </button>
-              </div>
-        
-            <Row gutter={[32, 16]}>
+            <Row style={{display:"flex",flexWrap:"wrap"}} className="rowse" gutter={[32, 16]}>
                 {renderCards}
             </Row>
+            </div>
+           
+            
         </div>
         <Footer/>
         </>

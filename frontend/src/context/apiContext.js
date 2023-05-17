@@ -4,7 +4,7 @@
  let API="https://hn.algolia.com/api/v1/search?";
 
  const initialState={
-   // isLoading:true,
+
     query:"",
     hits:[],
     page:0,
@@ -19,11 +19,11 @@
    
 
     const fetchapiData=async(url)=>{
-       // dispatch({type:"SET_LOADING"});
+      
         try{
             const res=await fetch(url);
             const data=await res.json();
-           //isLoading=false;
+          
            dispatch({type:"GET_STORIES",payload:{
             hits:data.hits,
             nbPages:data.nbPages,

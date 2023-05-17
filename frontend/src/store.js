@@ -3,6 +3,7 @@ import {createStore , combineReducers, applyMiddleware} from 'redux'
 import notesReducer from './reducer/NoteReducer'
 import categoryReducer from './reducer/CategoryReducer'
 import thunk from 'redux-thunk'
+import resultReducer from './reducer/resultReducer'
 
 
 const configStore = ()=>{
@@ -10,6 +11,7 @@ const configStore = ()=>{
         // users:usersReducer,
         notes:notesReducer,
         category:categoryReducer,
+        result:resultReducer
         
     }),applyMiddleware(thunk))
     return store

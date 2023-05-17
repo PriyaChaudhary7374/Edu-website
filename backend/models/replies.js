@@ -13,10 +13,10 @@ const replySchema = new mongoose.Schema({
     minlength: 3,
     maxlength: 5000,
   },
-  author: {
-    type: mongoose.Schema.ObjectId,
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
     ref: "User",
-    required:true,
+  
    
   },
   upvotes: {

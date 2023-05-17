@@ -13,7 +13,8 @@ const UserSchema = new Schema({
     },
     password: {
         type: String,
-        required: true
+        required:true,
+      
     },
     date: {
         type: Date,
@@ -27,6 +28,15 @@ const UserSchema = new Schema({
       type:String,
       required:true,
     },
+    authMethod:{
+        type:String,
+        default:"jwt"
+    },
+    googleId:{
+        type:String,
+        
+    }
+    
    
 });
 module.exports = mongoose.model('User', UserSchema);

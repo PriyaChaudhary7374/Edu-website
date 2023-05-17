@@ -25,7 +25,7 @@ function NotesForm(props) {
         initialValues={{
           title: props.title,
           body: props.body,
-          category: props.category,
+          category: props.category.name,
         }}
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
@@ -75,9 +75,9 @@ function NotesForm(props) {
               className="form-control"
             >
               {props.status === "add" ? (
-                <option value="">SELECTED</option>
+                <option value="">CATEGORY</option>
               ) : (
-                <option selected={props.category}></option>
+                <option selected={props.category.name}></option>
               )}
               {props.category.map((ele) => {
                 return (

@@ -26,8 +26,8 @@ const postSchema = new mongoose.Schema({
     maxlength: 1024,
     required: true,
   },
-  author: {
-    type: mongoose.Schema.ObjectId,
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required:true
   

@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import imagee from "../images/google.jpeg"
 
 const Login = (props) => {
+
+  const googleAuth = () => {
+		window.open(
+			`http://localhost:2000/api/auth/google/callback`,
+			"_self"
+		);
+	};
   const [credential, setcredential] = useState({ email: "", password: "" });
   let history = useHistory();
   const handleSubmit = async (e) => {
@@ -74,6 +82,10 @@ const Login = (props) => {
                       value="Submit"
                       className="updateProfileBtn"
                     />
+                    <button className="google-btn" onClick={googleAuth}>
+                    <img src={imagee} alt="google icon" />
+                    <span>Sign in with Google</span>
+                  </button>
                   </form>
                 </div>
               </div></>

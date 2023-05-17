@@ -1,5 +1,6 @@
 //require enviorment variables
 require('dotenv').config();
+require("./config/google")
 
 
 //require all packages 
@@ -13,6 +14,15 @@ const bodyParser=require("body-parser");
 const fetchuser=require("./middleware/fetchuser")
 const Category = require('./models/Category');
 const pick = require("lodash/pick");
+const path=require('path');
+const cookieSession=require("cookie-session")
+const passport=require("passport");
+const passportSetup=require("./passport")
+const authRoute = require("./routes/auth");
+const JwtStrategy = require('passport-jwt').Strategy;
+const ExtractJwt = require('passport-jwt').ExtractJwt;
+const User = require('./models/User');
+const resultRouter=require("./config/resultRouter")
 
 
 
@@ -23,8 +33,22 @@ const pick = require("lodash/pick");
 const cors = require('cors');
 const router = require('./config/router');
 const blogRouter=require('./config/blogRouter')
+const textbookRouter=require('./config/textbookRouter')
+app.use('/uploads', express.static('uploads'));
 
 
+
+
+app.use(
+	cookieSession({
+		name: "session",
+		keys: ["cyberwolve"],
+		maxAge: 24 * 60 * 60 * 100,
+	})
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(cors());
 
@@ -33,19 +57,23 @@ app.use(bodyParser.json());
 
 app.use(express.json());
 app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Origin", "http://localhost:3000");
     res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT,DELETE");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
     next();
 });
-app.use('/api/auth', require('./routes/userRoute'))
-app.use('/api/quiz', require('./routes/quizRoute'))
+app.use('/api/auth', require('./routes/userRoute'));
+app.use('/api/quiz', require('./routes/quizRoute'));
 app.use('/api/tags',require('./routes/tags'));
 app.use('/api/reply',require('./routes/replies'));
 app.use('/api/posts',require('./routes/posts'));
+                                                      
 app.use("/api", router);
-app.use("/api",blogRouter);
-app.use('C:/Users/pri83/Education/backend/uploads', express.static('uploads'));
+app.use("/api",blogRouter); 
+app.use("/api",textbookRouter)   
+app.use("/api/auth", authRoute);    
+app.use("/api",resultRouter);                                                                              
+
 
 
 

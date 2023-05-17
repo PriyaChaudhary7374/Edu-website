@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import axios from "axios"
 
  
 
@@ -20,6 +21,8 @@ import BlogPage from './components/views/BlogPage/BlogPage.js'
 import CreatePage from './components/views/BlogPage/Section.js/CreatePage.js'
 import PostPage from './components/views/PostPage/PostPage.js'
 
+import ResultTable from './components/Result/ResultTable.js'
+
 
 
 
@@ -30,6 +33,8 @@ import PostPage from './components/views/PostPage/PostPage.js'
 
 function App () {
   const[alert, setAlert] = useState(null);
+  const[user,setUser]=useState(null)
+ 
   const showAlert =(message,type)=> {
     setAlert({
       msg: message,
@@ -40,6 +45,20 @@ function App () {
     },1500)
   };
  const token=localStorage.getItem('token');
+//  const getUser = async () => {
+//   try {
+//     const url = `http://localhost:2000/api/auth/login/success`;
+//     const { data } = await axios.get(url);
+//     setUser(data.user._json);
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
+
+// useEffect(() => {
+//   getUser();
+// }, []);
+
 
   return ( 
   <>
@@ -54,20 +73,21 @@ function App () {
    
     <Route path="/login" render={(props) => <Login {...props} showAlert={showAlert} />}/>
      <Route path="/signup" render={(props) => <Signup {...props} showAlert={showAlert} />}/>
+    
 
    
-   <Route path='/notes' component={token?Notes:Login} exact={true}/>
-          <Route path='/notes/category' component={token?Category:Login} exact={true}/>
-          <Route path="/textbook" component={token?BlogPage:Login}/>
-          <Route path="/create" component={token?CreatePage:Login}/>
-          <Route path="/post/:postId" component={token?PostPage:Login}/>
-         
-   <Route path="/quiz" component={token?Quiz:Login}/>
-   <Route path="/profile" component={Profile}/>
-   <Route  path="/playquiz" component={PlayQuizEntry}/>
-   <Route path="/community" component={token?Community:Login}/>
-   <Route path="/discussions" component={token?Discussions:Login}/>
-   <Route path="/editprofile" component={Editprofile}/>
+   <Route path='/notes' component={token||user?Notes:Login} exact={true}/>
+          <Route path='/category' component={token||user?Category:Login} exact={true}/>
+          <Route path="/textbook" component={token||user?BlogPage:Login}/>
+          <Route path="/create" component={token||user?CreatePage:Login}/>
+          <Route path="/post/:postId" component={token||user?PostPage:Login}/>
+              <Route path="/quiz" component={token||user?Quiz:Login}/>
+              <Route path="/profile" component={token||user?Profile:Login}/>
+              <Route  path="/playquiz" component={token||user?PlayQuizEntry:Login}/>
+                   <Route path="/quizResult" component={ResultTable}/>
+                  <Route path="/community" component={token?Community:Login}/>
+                  <Route path="/discussions" component={token?Discussions:Login}/>
+                   <Route path="/editprofile" component={Editprofile}/>
    
    
 

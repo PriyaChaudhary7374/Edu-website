@@ -12,9 +12,11 @@ const NoteReducer = (state=[],action)=>{
             return [...filtered]
         }
         case ('EDIT_NOTES'):{
-            const res = state.find(ele=>ele._id==action.payload._id)
-            state[state.indexOf(res)]=action.payload
-            return [...state]
+            return state.map((ele) =>
+        ele._id === action.payload.id
+          ? Object.assign(ele, {}, action.payload.data)
+          : Object.assign(ele, {})
+      );
         }
         default:{
             return [...state]
@@ -22,4 +24,4 @@ const NoteReducer = (state=[],action)=>{
     }
 }
 
-module.exports = NoteReducer
+module.exports = NoteReducer;

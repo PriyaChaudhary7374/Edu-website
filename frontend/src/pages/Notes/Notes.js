@@ -44,6 +44,7 @@ function Notes(props) {
   const handleEdit = (id, title, body, category) => {
     status === "add" ? SetStatus("edit") : SetStatus("add");
     status === "edit" ? SetStatus("add") : SetStatus("edit");
+   
     SetTitle(title);
     SetBody(body);
     SetCategory(category);
@@ -86,7 +87,7 @@ function Notes(props) {
               {props.notes !== undefined &&
                 props.notes.map((ele, i) => {
                   return (
-                    <Card
+                    <Card key={i}
                       className={classes.root}
                       variant="outlined"
                       style={{
@@ -130,7 +131,7 @@ function Notes(props) {
                               ele._id,
                               ele.title,
                               ele.body,
-                              ele.category
+                              ele.category?ele.category.name:'CATEGORY'
                             )
                           }
                         >

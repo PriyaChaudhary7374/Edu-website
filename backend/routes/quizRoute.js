@@ -2,13 +2,27 @@ const express = require("express");
 const router = express.Router();
 const fetchuser = require("../middleware/fetchuser");
 const Quiz = require("../models/Quiz");
+const Result=require("../models/resultSchema")
 const { body, validationResult } = require("express-validator");
+
+const { number } = require("joi");
 
 
 router.get("/fetchallquiz", fetchuser, async (req, res) => {
     try {
       const quizs = await Quiz.find({ user: req.user.id });
-      res.json(quizs);
+      const numQuizzes = quizs.length;
+      res.json({quizs,numQuizzes});
+    } catch (error) {
+      console.error(error.message);
+      res.status(500).send("Internal Server Error");
+    }
+  });
+  router.get("/quizzesWithAnswers", fetchuser,async (req, res) => {
+    try {
+      const quizzes = await Quiz.find({user:req.user.id});
+      const answers = quizzes.map((quiz) => quiz.answer);
+      res.json(answers);
     } catch (error) {
       console.error(error.message);
       res.status(500).send("Internal Server Error");
@@ -16,9 +30,9 @@ router.get("/fetchallquiz", fetchuser, async (req, res) => {
   });
 
 
-  router.get("/fetchallquiznoauthentication/:message", async (req, res) => {
+  router.get("/fetchallquiznoauthentication/:message",fetchuser, async (req, res) => {
     try {
-      const quizs = await Quiz.find({ code: req.params.message});
+      const quizs = await Quiz.find({ code: req.params.message,user:req.user.id});
       res.json(quizs);
 
     } catch (error) {
@@ -134,11 +148,12 @@ router.put("/updatecode/:id", fetchuser, async (req, res) => {
   }
   
   const numberHAI = (req.params.id)
+ 
     console.log(numberHAI, typeof numberHAI)
   // console.log(req.params.id);
   //Find the quiz to be updated and update it
   try {
-    var quiz = await Quiz.find({"user": numberHAI});
+    var quiz = await Quiz.find({"user":numberHAI});
     // console.log(quiz);
     
     if (!quiz) {
@@ -188,5 +203,8 @@ router.delete("/deletequiz/:id", fetchuser, async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
+
+// Update user's score for a quiz
+
 
 module.exports = router;

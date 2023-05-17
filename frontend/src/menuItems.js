@@ -1,9 +1,9 @@
 export const menuItems = [
 {
-    title: "Widgets",
+    title: "WIDGETS",
     submenu: [
         {
-            title: "Quiz",
+            title: "QUIZ",
             submenu: [{
                     title: "Create",
                     url:'/quiz'

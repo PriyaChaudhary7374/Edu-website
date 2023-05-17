@@ -3,7 +3,7 @@ import { json } from 'react-router-dom';
 import Game from './Game';
 import Footer from '../Footer/Footer';
 import Navbar from '../Navbar/Navbar';
-
+import "./quiz.css"
 
 
 const PlayQuizEntry = () => {
@@ -12,6 +12,8 @@ const PlayQuizEntry = () => {
   const [seq, setSeq] = useState("")  
   const quizsInitial = []
   const [quizs, setQuizs] = useState(quizsInitial)
+  const [name,setName]=useState("");
+  const [email,setEmail]=useState("");
 
   var [val, setVal] = useState('')
 
@@ -32,6 +34,8 @@ const PlayQuizEntry = () => {
   };
 
   const fetchallquiz = async() => {
+   
+    
     const response = await fetch(`http://localhost:2000/api/quiz/fetchallquiznoauthentication/${message}`, {
       method: 'GET',
       headers: {
@@ -52,15 +56,24 @@ const PlayQuizEntry = () => {
 
   console.log(seq);
 
-  const myFunction = () =>{
+  const myFunction = async() =>{
     console.log(sessionStorage.getItem("val"))
     setVal(sessionStorage.getItem("val"))
     const disableBtn=()=> {
       document.getElementById('btn').disabled = true;
     }
+    const response = await fetch(`http://localhost:2000/api/result/${message}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        "auth-token": localStorage.getItem('token')
+      },
+      body:JSON.stringify({name,email,val:sessionStorage.getItem("val")})
+    });
+    console.log(response);
     disableBtn();
   }
-
+  
 
   return (
     <>
@@ -69,23 +82,29 @@ const PlayQuizEntry = () => {
     
       <h1 className="my-5">Welcome to QUIZOID!!</h1>
       <hr/>
-      <h2 className="my-5">Enter the code and start playing</h2>
-      <div>
-      <textarea
-    
-        type="text"
+      <div className="input-name">
+     
+  <h2 className="my-5">ENTER YOUR NAME:</h2>
+  <input type="text" id="fname" className="form-control" name="fname" onChange={(e)=>setName(e.target.value)}/><br/>
+  <h2 className="my-5">ENTER YOUR EMAIL ID:</h2>
+  <input type="email" className="form-control" id="email" name="email" onChange={(e)=>setEmail(e.target.value)}/><br/>  
+ <h2 className="my-5">Enter the code and start playing</h2>
+ <textarea type="text" className="form-control"
         id="message"
         name="hide"
         onChange={handleChange}
         value={message}
       />
 
-      <h2>Message: {message}</h2>
+      <h2 className="my-5">Message: {message}</h2>
+
 
       {/* <h2>Updated: {updated}</h2> */}
 
       <button className='btn btn-primary my-5' id="btn2" onClick={fetchallquiz}>Play</button>
+    
     </div>
+     
 
     {quizs.map((quiz) => {
           return (
@@ -99,6 +118,7 @@ const PlayQuizEntry = () => {
     
     <h1 className={seq=='1' ? 'd-flex justify-content-center my-3 text-success' : 'd-none' }>YOUR SCORE</h1>
    <h1 className={seq=='1' ? 'd-flex justify-content-center my-3 text-success' : 'd-none' }>{val}</h1>
+   
   
     {/* <button >GENERATE SCORE</button>  */}
     <div>

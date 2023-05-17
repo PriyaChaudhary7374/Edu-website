@@ -1,9 +1,18 @@
 import React, {useState} from "react";
 import { Link, useHistory } from "react-router-dom";
+import "./signup.css"
 
 import image from "../images/avatar.jpeg"
+import imagee from "../images/google.jpeg"
 
 const Signup = (props) => {
+
+  const googleAuth = () => {
+		window.open(
+			`http://localhost:2000/api/auth/google/callback`,
+			"_self"
+		);
+	};
   const [credential, setcredential] = useState({ name:"", email: "", password: "", confirmpassword:"" });
   const [fileInputState, setFileInputState] = useState('');
   const [previewSource, setPreviewSource] = useState(image);
@@ -154,12 +163,18 @@ const previewFile = (file) => {
                       value="Submit"
                       className="updateProfileBtn"
                     />
+
+<button className="google-btn" onClick={googleAuth}>
+						<img src={imagee} alt="google icon" />
+						<span>Sign up with Google</span>
+					</button>
                   </form>
-                  <div className="login-page">
+                  
+                </div>
+                <div className="login-page">
       <h3 className="some-text">Already registered?</h3>
       <Link to="/login" className="gotologin">Login</Link>
       </div>
-                </div>
               </div>
     </>
     

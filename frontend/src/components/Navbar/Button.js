@@ -21,20 +21,22 @@ export function Button() {
  
     const userinfo = async () => {
     
-   
-      const response = await fetch("http://localhost:2000/api/auth/getuser", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "auth-token": localStorage.getItem('token')
-        },
-       
-      });
+      try {
+        const response = await fetch("http://localhost:2000/api/auth/getuser", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem('token')
+          },
+        });
+        
+        const abc = await response.json();
+        setUser(abc);
+      } catch (error) {
+        console.log(error.message);
+      }
       
-      const abc = await response.json();
-      setUser(abc);
-      
-   }
+    }
   
   
    useEffect(()=>{

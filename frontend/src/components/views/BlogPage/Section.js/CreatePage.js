@@ -6,13 +6,16 @@ import axios from 'axios';
 import { useSelector } from "react-redux";
 import  Footer  from '../../../Footer/Footer'
 import Navbar from '../../../Navbar/Navbar'
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 const { Title } = Typography;
 
 function CreatePage(props) {
     const user = useSelector(state => state.user);
-
+    const location=useLocation();
+  
     const [content, setContent] = useState("")
     const [files, setFiles] = useState([])
+    const categoryName = new URLSearchParams(location.search).get('cat');
 
     const onEditorChange = (value) => {
         setContent(value)
@@ -28,13 +31,14 @@ function CreatePage(props) {
         event.preventDefault();
 
         setContent("");
-
+          
         
         const variables = {
             content: content,
         }
+        
 
-        axios.post('http://localhost:2000/api/createPost',variables,{
+        axios.post(`http://localhost:2000/api/createPost/?cat=${categoryName}`,variables,{
             headers:{
                 'auth-token':localStorage.getItem('token')
             } 
@@ -45,7 +49,7 @@ function CreatePage(props) {
                     message.success('Post Created!');
 
                     setTimeout(() => {
-                        props.history.push('/textbook')
+                        props.history.push(`/textbook/?cat=${categoryName}`)
                     }, 2000);
                 }
                 else{
@@ -53,6 +57,8 @@ function CreatePage(props) {
                 }
             })
     }
+    
+   
 
 
     return (

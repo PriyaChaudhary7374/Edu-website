@@ -76,7 +76,7 @@ export const startEditNotes = (formdata,id)=>{
             }
         }).then(res=>{
                 const notes = res.data
-                dispatch(editNotes(formdata))
+                dispatch(editNotes(formdata,id))
             })
             .catch(err=>alert(err))
 

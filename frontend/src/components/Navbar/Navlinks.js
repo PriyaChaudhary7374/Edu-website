@@ -1,17 +1,20 @@
 import { menuItems } from '../../menuItems';
 import MenuItems from './MenuItems';
 import "./Dropdown.css"
-const Navlinks = () => {
+import { useState } from 'react';
+const Navlinks = ({showMenu}) => {
+ 
+ 
   return (
     <>
-      <ul className="menus">
+     <ul className={`menus ${showMenu ? 'mobile-menu-open' : ''}`}>
         {menuItems.map((menu, index) => {
           const depthLevel = 0;
           return (
-            <MenuItems
+            <MenuItems 
               items={menu}
               key={index}
-              depthLevel={depthLevel}
+              depthLevel={depthLevel} 
             />
           );
         })}

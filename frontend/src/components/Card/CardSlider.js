@@ -67,7 +67,6 @@ const CardSlider = (props) => {
 
   return (
    <>
-    
     <div className="abc">
       <h2><b>Recent Articles</b></h2>
       <div className="wrpper">

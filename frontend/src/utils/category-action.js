@@ -40,8 +40,8 @@ export const startPostCategory = (formdata)=>{
             }
         })
         .then(res=>{
-            const chapter = res.data
-            dispatch(postCategory(chapter))
+            const category = res.data
+            dispatch(postCategory(formdata))
         })
         .catch(err=>alert(err))
     }

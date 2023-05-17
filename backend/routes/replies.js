@@ -16,12 +16,12 @@ router.post("/create/:id", fetchuser, async (req, res) => {
   const reply = new Reply({
     post: req.params.id,
     comment: req.body.comment,
-    author: req.user.id,
+    user: req.user.id,
   });
   try {
     await reply.save();
     const reply_populated = await Reply.find({ _id: reply._id }).populate(
-      "author",
+      "user",
       "name -_id"
     );
     res.send(reply_populated);
@@ -37,7 +37,7 @@ router.get("/:id", async (req, res) => {
     return res.status(400).send("The Post with given ID doesn't exists!");
   }
   const replies = await Reply.find({ post: req.params.id }).populate(
-    "author",
+    "user",
     "name"
   );
   res.send(replies);
@@ -58,7 +58,7 @@ router.put("/like/:id", fetchuser, async (req, res) => {
   reply.upvotes = upvoteArray;
   const result = await reply.save();
   const reply_new = await Reply.find({ _id: reply._id }).populate(
-    "author",
+    "user",
     "name"
   );
   res.send(reply_new);

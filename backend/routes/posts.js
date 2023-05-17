@@ -21,7 +21,7 @@ router.post("/create", fetchuser, async (req, res) => {
     title: req.body.title,
     tags: tags_array,
     description: req.body.description,
-    author: req.user.id,
+    user: req.user.id,
     views: 1,
   });
   try {
@@ -34,15 +34,15 @@ router.post("/create", fetchuser, async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
-  let all_posts = await Post.find().populate("author", "name -_id");
+router.get("/",fetchuser, async (req, res) => {
+  let all_posts = await Post.find().populate("user", "name -_id");
   res.send(all_posts);
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/:id",fetchuser, async (req, res) => {
   try {
     const post = await Post.find({ _id: req.params.id }).populate(
-      "author",
+      "user",
       "name"
     );
     const views = post[0].views;
@@ -71,8 +71,8 @@ router.put("/like/:id", fetchuser, async (req, res) => {
   post.upvotes = upvoteArray;
   const result = await post.save();
   const post_new = await Post.find({ _id: post._id }).populate(
-    "author",
-    "name username"
+    "user",
+    "name"
   );
   res.send(post_new);
 });

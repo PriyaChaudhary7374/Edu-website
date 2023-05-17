@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import quizContext from "../../context/quizContext";
 import AddQuiz from "./AddQuiz";
 import Quizitem from "./QuizItem";
+import { Link } from "react-router-dom";
 
 
 const Quizs = (props) => {
@@ -195,7 +196,15 @@ const Quizs = (props) => {
           return (
             <Quizitem quiz={quiz} key={quiz._id} updateQuiz={updateQuiz} showAlert={props.showAlert}/>
           );
-        })}
+        })} 
+        <div style={{textAlign:"center"}}>
+        <Link  to="/quizResult">
+        <button className='btn btn-primary my-5' id="btn2">
+    See Results
+  </button>
+</Link>
+</div>
+
       </div>
       
     </>
