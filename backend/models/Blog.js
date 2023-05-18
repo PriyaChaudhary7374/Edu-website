@@ -11,6 +11,12 @@ const blogSchema = mongoose.Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
+    chapter:{
+        type:String,
+        required:true,
+
+    },
+
 
     textbookName:{
         type:Array,

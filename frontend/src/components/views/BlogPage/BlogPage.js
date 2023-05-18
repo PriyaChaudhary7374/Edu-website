@@ -56,6 +56,7 @@ function BlogPage() {
 
     const renderCards = blogs.map((blog, index) => {
         return <Col key={index} lg={8} md={12} xs={24}>
+           
             <Card className="blog-card"
                 hoverable
                 style={{ width: 310, marginTop: 16}}  
@@ -64,7 +65,7 @@ function BlogPage() {
 
                     <a href={`/post/${blog._id}`}> <EllipsisOutlined className="ico" style={{fontSize:'30px'}} /></a>,
                 ]}
-            >
+            >   <h2 style={{textAlign:"center"}}><b>{blog.chapter}</b></h2>
                
                 <div style={{ height: 150, overflowY: 'scroll', marginTop: 10 }}>
                     <div dangerouslySetInnerHTML={{ __html: blog.content }} />

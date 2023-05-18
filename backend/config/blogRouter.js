@@ -50,7 +50,7 @@ router.post("/uploadfiles", (req, res) => {
 
 router.post("/createPost", fetchuser,(req, res) => {
     const bookName=req.query.cat
-    let blog = new Blog({ content: req.body.content,user:req.user.id,textbookName:[bookName]});
+    let blog = new Blog({ content: req.body.content,user:req.user.id,textbookName:[bookName],chapter:req.body.chapter});
     console.log(blog);
 
     blog.save((err, postInfo) => {

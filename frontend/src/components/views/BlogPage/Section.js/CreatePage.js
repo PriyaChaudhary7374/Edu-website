@@ -15,6 +15,7 @@ function CreatePage(props) {
   
     const [content, setContent] = useState("")
     const [files, setFiles] = useState([])
+    const [chapter,setChapter]=useState("");
     const categoryName = new URLSearchParams(location.search).get('cat');
 
     const onEditorChange = (value) => {
@@ -35,6 +36,7 @@ function CreatePage(props) {
         
         const variables = {
             content: content,
+            chapter:chapter,
         }
         
 
@@ -65,8 +67,12 @@ function CreatePage(props) {
         <>
         <Navbar/>
         <div style={{ maxWidth: '700px', margin: '2rem auto' }}>
-            <div style={{ textAlign: 'center' }}>
-                <Title level={2} > Editor</Title>
+           
+           
+  <div className="input-name" style={{ textAlign: 'center' }}>
+               
+                <h2 className="my-3">ENTER CHAPTER NAME:</h2>
+  <input type="text" id="chapter" className="form-control" name="fname" onChange={(e)=>setChapter(e.target.value)}/><br/>
             </div>
             <QuillEditor
                 placeholder={"Start Posting Something"}
