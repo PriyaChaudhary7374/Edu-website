@@ -39,7 +39,7 @@ function PostPage(props) {
                 <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                     <Title style={{letterSpacing:"2px"}} level={4}>{post.createdAt}</Title>
                 </div>
-                <h2 style={{textAlign:"center"}}><b>{post.chapter}</b></h2>
+                <h2 style={{textAlign:"center"}}><b>{post.chapter}</b></h2><hr/>
                 <div dangerouslySetInnerHTML={{ __html: post.content }} />
 
             </div>

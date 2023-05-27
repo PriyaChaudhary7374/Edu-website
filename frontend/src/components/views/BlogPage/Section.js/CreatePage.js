@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import  Footer  from '../../../Footer/Footer'
 import Navbar from '../../../Navbar/Navbar'
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import { Checkbox } from '@material-ui/core';
 const { Title } = Typography;
 
 function CreatePage(props) {
@@ -16,6 +17,7 @@ function CreatePage(props) {
     const [content, setContent] = useState("")
     const [files, setFiles] = useState([])
     const [chapter,setChapter]=useState("");
+    const [isPublic,setIsPublic]=useState(false);
     const categoryName = new URLSearchParams(location.search).get('cat');
 
     const onEditorChange = (value) => {
@@ -37,6 +39,7 @@ function CreatePage(props) {
         const variables = {
             content: content,
             chapter:chapter,
+            isPublic:isPublic,
         }
         
 
@@ -71,14 +74,36 @@ function CreatePage(props) {
            
   <div className="input-name" style={{ textAlign: 'center' }}>
                
-                <h2 className="my-3">ENTER CHAPTER NAME:</h2>
-  <input type="text" id="chapter" className="form-control" name="fname" onChange={(e)=>setChapter(e.target.value)}/><br/>
+                
+  <input type="text" id="chapter" placeholder='Enter Chapter Name' className="form-control" name="fname" onChange={(e)=>setChapter(e.target.value)}/><br/>
             </div>
             <QuillEditor
                 placeholder={"Start Posting Something"}
                 onEditorChange={onEditorChange}
                 onFilesChange={onFilesChange}
             />
+            <label style={{ display: 'flex', alignItems: 'center',justifyContent:'center',marginTop:"10px" }}>
+          <Checkbox
+    type="checkbox"
+    name="isPublic"
+    onChange={()=>setIsPublic(!isPublic)}
+    style={{
+      marginRight: '8px',
+      width: '16px',
+      height: '16px',
+      border: '1px solid #ccc',
+      borderRadius: '3px',
+      outline: 'none',
+      cursor: 'pointer',
+      position: 'relative',
+    
+
+    }}
+  />
+   <span style={{ fontSize: '14px', color: '#333' }}>Make it Public</span>
+</label>
+
+
 
             <Form onSubmit={onSubmit}>
                 <div style={{ textAlign: 'center', margin: '2rem', }}>

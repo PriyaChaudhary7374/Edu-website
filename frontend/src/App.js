@@ -20,8 +20,10 @@ import Category from './pages/Notes/Category.js'
 import BlogPage from './components/views/BlogPage/BlogPage.js'
 import CreatePage from './components/views/BlogPage/Section.js/CreatePage.js'
 import PostPage from './components/views/PostPage/PostPage.js'
+import PublicPage from './components/views/PublicPage.js'
 
 import ResultTable from './components/Result/ResultTable.js'
+import PublicNotes from './pages/Notes/PublicNotes.js'
 
 
 
@@ -33,7 +35,7 @@ import ResultTable from './components/Result/ResultTable.js'
 
 function App () {
   const[alert, setAlert] = useState(null);
-  const[user,setUser]=useState(null)
+ 
  
   const showAlert =(message,type)=> {
     setAlert({
@@ -45,19 +47,7 @@ function App () {
     },1500)
   };
  const token=localStorage.getItem('token');
-//  const getUser = async () => {
-//   try {
-//     const url = `http://localhost:2000/api/auth/login/success`;
-//     const { data } = await axios.get(url);
-//     setUser(data.user._json);
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
-
-// useEffect(() => {
-//   getUser();
-// }, []);
+ const user=localStorage.getItem('user')
 
 
   return ( 
@@ -77,13 +67,15 @@ function App () {
 
    
    <Route path='/notes' component={token||user?Notes:Login} exact={true}/>
+   <Route path='/notes/public/:shareableLink' component={token||user?PublicNotes:Login}/>
+   <Route path='/chapters/public/:shareableLink' component={token||user?PublicPage:Login}/>
           <Route path='/category' component={token||user?Category:Login} exact={true}/>
           <Route path="/textbook" component={token||user?BlogPage:Login}/>
-          <Route path="/create" component={token||user?CreatePage:Login}/>
-          <Route path="/post/:postId" component={token||user?PostPage:Login}/>
-              <Route path="/quiz" component={token||user?Quiz:Login}/>
-              <Route path="/profile" component={token||user?Profile:Login}/>
-              <Route  path="/playquiz" component={token||user?PlayQuizEntry:Login}/>
+          <Route path="/create" component={token?CreatePage:Login}/>
+          <Route path="/post/:postId" component={token?PostPage:Login}/>
+              <Route path="/quiz" component={token?Quiz:Login}/>
+              <Route path="/profile" component={token?Profile:Login}/>
+              <Route  path="/playquiz" component={token?PlayQuizEntry:Login}/>
                    <Route path="/quizResult" component={ResultTable}/>
                   <Route path="/community" component={token?Community:Login}/>
                   <Route path="/discussions" component={token?Discussions:Login}/>

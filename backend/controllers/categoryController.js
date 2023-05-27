@@ -2,9 +2,9 @@ const Category = require("../models/Category");
 const Note = require("../models/Note");
 
 module.exports.list = (req, res) => {
-  Category.find({ user: req.user.id })
-    .then((category) => {
-      res.json(category);
+  Category.find({ user: req.user.id }) 
+    .then((categories) => {
+      res.json(categories);
     })
     .catch((err) => {
       res.json(err);
@@ -40,7 +40,8 @@ module.exports.create = (req, res) => {
   const category = new Category({
     name: body.name,
     edit: body.edit,
-    user: req.user.id
+    user: req.user.id,
+  
   });
   category
     .save()

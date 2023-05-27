@@ -65,30 +65,30 @@ class NewPost extends Form {
             style={{ backgroundColor: "#F1F1F1" }}
           >
             <form onSubmit={this.handleSubmit}>
-              <Input
+              <b><Input
                 value={data.title}
                 onChange={this.handleChange}
                 label="Title"
                 name="title"
                 type="text"
                 error={errors.title}
-              />
+              /></b><br/>
               <div className="form-group">
-                <label htmlFor="description">Description</label>
-                <textarea
+                <label htmlFor="description"><b>Description</b></label>
+                <b><textarea
                   value={data.description}
                   onChange={this.handleChange}
                   name="description"
                   type="description"
                   id="description"
                   className="form-control"
-                />
+                /></b>
                 {errors.description && (
                   <div className="alert-info">{errors.description}</div>
                 )}
-              </div>
+              </div><br/>
               <div className="form-group">
-                <label htmlFor="tags">Related Tags</label>
+                <label htmlFor="tags"><b>Related Tags</b></label>
                 <br />
                 {tags.map((tag) => (
                   <React.Fragment>
@@ -98,8 +98,8 @@ class NewPost extends Form {
                         className="form-check-input"
                         type="checkbox"
                         onChange={() => this.handleTagChange(tag._id)}
-                      />
-                      {tag.name}
+                      />&nbsp;
+                      {tag.name}&nbsp;&nbsp;
                     </label>
                   </React.Fragment>
                 ))}

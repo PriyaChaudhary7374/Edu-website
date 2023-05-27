@@ -7,12 +7,24 @@ import imagee from "../images/google.jpeg"
 
 const Signup = (props) => {
 
-  const googleAuth = () => {
+  const googleAu =() => {
 		window.open(
 			`http://localhost:2000/api/auth/google/callback`,
 			"_self"
 		);
-	};
+   
+  }
+
+  const googleAuth=async()=>{
+    googleAu();
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get("token");
+    console.log(token);
+    if (token) {
+      localStorage.setItem("token", token);
+      console.log(token);
+    }
+  }
   const [credential, setcredential] = useState({ name:"", email: "", password: "", confirmpassword:"" });
   const [fileInputState, setFileInputState] = useState('');
   const [previewSource, setPreviewSource] = useState(image);

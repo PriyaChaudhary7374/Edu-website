@@ -111,7 +111,7 @@ class PostPage extends Component {
               style={{ color: "#505050" }}
             >
               <div>
-                <PersonCircle size={30} className="mr-2" />
+                <PersonCircle size={30} className="mr-2" />&nbsp;
                 Posted by {(post.user && post.user.name) || 0}
               </div>
               <p className="mb-1">
@@ -129,7 +129,7 @@ class PostPage extends Component {
             replies.map((reply) => (
               <div className="container col-lg-6 shadow-lg p-3 mt-3 bg-body rounded">
                 <div className="ml-4">
-                  <PersonCircle size={30} className="mr-3" />
+                  <PersonCircle size={30} className="mr-3" />&nbsp;
                   Posted by {reply.user.name}
                 </div>
                 <div className="m-4">{reply.comment}</div>

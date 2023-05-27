@@ -24,6 +24,14 @@ const noteSchema=new Schema({
         type:Schema.Types.ObjectId,
         ref:'Category',
         required:true
+    },
+    isPublic: {
+        type: Boolean,
+        default: false
+    },
+    shareableLink: {
+        type: String,
+        default: null
     }
 })
 

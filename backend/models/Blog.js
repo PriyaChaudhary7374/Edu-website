@@ -16,6 +16,14 @@ const blogSchema = mongoose.Schema({
         required:true,
 
     },
+    isPublic: {
+        type: Boolean,
+        default: false
+    },
+    shareableLink: {
+        type: String,
+        default: null
+    },
 
 
     textbookName:{

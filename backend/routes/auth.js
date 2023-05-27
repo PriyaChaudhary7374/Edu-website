@@ -1,74 +1,85 @@
 const router = require("express").Router();
 const passport = require("passport");
-const User=require("../models/User")
+const jwt = require("jsonwebtoken");
+const User = require("../models/User");
 
 router.get("/login/success", (req, res) => {
-	if (req.user) {
-		res.status(200).json({
-			error: false,
-			message: "Successfully Loged In",
-			user: req.user,
-		});
-	} else {
-		res.status(403).json({ error: true, message: "Not Authorized" });
-	}
+  if (req.user) {
+    res.status(200).json({
+      error: false,
+      message: "Successfully Logged In",
+      user: req.user,
+    });
+  } else {
+    res.status(403).json({ error: true, message: "Not Authorized" });
+  }
 });
 
 router.get("/login/failed", (req, res) => {
-	res.status(401).json({
-		error: true,
-		message: "Log in failure",
-	});
+  res.status(401).json({
+    error: true,
+    message: "Login failure",
+  });
 });
 
-router.get("/google", passport.authenticate("google", ["profile", "email"]));
+router.get(
+  "/google",
+  passport.authenticate("google", ["profile", "email"])
+);
 
-router.get("/google/callback", passport.authenticate("google", {
-    successRedirect: process.env.CLIENT_URL,
-    failureRedirect: "/login/failed",
-}), async (req, res) => {
+router.get(
+  "/google/callback",
+  passport.authenticate("google", { failureRedirect: "/api/auth/login/failed" }),
+  async (req, res) => {
     try {
-        const { name, email } = req.user;
-        const user = await User.findOne({ email });
-        if (user) {
-            user.authMethod = "google";
-            user.googleId = req.user.id;
-            await user.save();
-        } else {
-            const newUser = new User({
-                name,
-                email,
-                authMethod: "google",
-                googleId: req.user.id,
-				avatarUrl:null,
-				avatarId:null
-            });
-            await newUser.save();
-        }
-        const token = jwt.sign({ userId: user._id }, "helloiamsecret", { expiresIn: '1h' });
+        console.log(req.user);
+        const { _id, name, email, avatarUrl, avatarId, authMethod, googleId } = req.user.user;
+     
+      console.log(email);
+      const user = await User.findOne({ email });
+      console.log(user);
 
-        // Return the token and other user data in the response
-        res.redirect(process.env.CLIENT_URL).json({
-            token,
-            user: {
-                _id: user._id,
-                name: user.name,
-                email: user.email,
-
-                // Include any other relevant user data
-            },
-            
+      if (user) {
+        // User exists, update authMethod and googleId
+        user.authMethod = "google";
+        user.googleId = req.user.id;
+        await user.save();
+      } else {
+        // User doesn't exist, create a new user
+        //const fullName = `${familyName} ${givenName}`
+        const newUser = new User({
+          name:name,
+          email:email,
+          authMethod: "google",
+          googleId: googleId,
+          avatarUrl: avatarUrl,
+          avatarId: avatarId,
         });
-       
+        console.log(newUser)
+        await newUser.save();
+      }
+
+      // Generate a JWT token
+      const token = jwt.sign({ userId: user._id }, "helloiamsecret", {
+        expiresIn: "1h",
+      });
+
+      // Redirect the user to the client URL with the token as a query parameter
+      res.redirect(
+        `${process.env.CLIENT_URL}?token=${encodeURIComponent(
+          token
+        )}&success=true`
+      );
     } catch (err) {
-        console.error(err.message);
-        res.status(500).send("Server error");
+      console.error(err.message);
+      res.status(500).send("Server error");
     }
-});
+  }
+);
 
 router.get("/logout", (req, res) => {
-	req.logout();
-	res.redirect(process.env.CLIENT_URL);
+  req.logout();
+  res.redirect(process.env.CLIENT_URL);
 });
 
 module.exports = router;

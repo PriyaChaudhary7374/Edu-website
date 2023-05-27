@@ -10,11 +10,13 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import { useState } from "react";
 
 import MainAppBar from "../../components/AppBar";
 import { startGetCategory } from "../../utils/category-action";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
+import axios from "axios";
 const useStyles = makeStyles({
   root: {
     maxWidth: 375,
@@ -40,7 +42,30 @@ function Notes(props) {
   const [status, SetStatus] = React.useState("add");
   const [title, SetTitle] = React.useState("");
   const [body, SetBody] = React.useState("");
+  const [showPublic, setShowPublic] = useState(false); 
   const [category, SetCategory] = React.useState("");
+  const [shareableLink, setShareableLink] = useState("");
+  
+  
+  
+    const handleGenerateLink = async () => {
+      try {
+       
+        const response = await axios.post(`http://localhost:2000/api/notes/generate-link`,{
+          headers:{
+              'auth-token':localStorage.getItem('token')
+          }
+      });
+        const  shareableLink  = response.data
+        console.log(shareableLink);
+        setShareableLink(shareableLink);
+      } catch (error) {
+        console.log(error);
+        console.error(error);
+       
+      }
+    };
+  
   const handleEdit = (id, title, body, category) => {
     status === "add" ? SetStatus("edit") : SetStatus("add");
     status === "edit" ? SetStatus("add") : SetStatus("edit");
@@ -59,12 +84,33 @@ function Notes(props) {
   const handleBluring = (id) => {
     props.dispatch(startGetCategory());
   };
+  const handleTogglePublic = () => {
+    setShowPublic((prevShowPublic) => !prevShowPublic);
+  };
+  const baseUrl = "http://localhost:3000/notes/public/"; 
 
   return (
     <>
     <Navbar/>
       <MainAppBar />
+      
       <div align="center" style={{ marginTop: "100px" }}>
+      <div>
+      <button style={{backgroundColor: '#4CAF50', /* Green */
+  border: 'none',
+  color: 'white',
+  padding: '10px',
+  textAlign: 'center',
+  textDecoration: 'none',
+  display: 'inline-block',
+  fontSize:'16px',marginTop:'0'}} onClick={handleGenerateLink}>Generate Sharable Link</button>
+      {shareableLink && typeof shareableLink === 'string' && (
+        <div style={{marginTop:"8px"}}>
+         <a style={{color:"blue"}} href={baseUrl + shareableLink}>{baseUrl + shareableLink}</a>
+          <p style={{color:"red",fontWeight:"bold"}}>Share this link with others to access the public notes.</p>
+        </div>
+      )}
+    </div>
         <Grid container component="main">
           <Grid item xs={12} sm={3}>
             <Grid container justify="center">
@@ -84,6 +130,7 @@ function Notes(props) {
 
           <Grid item xs={12} sm={5}>
             <div>
+            
               {props.notes !== undefined &&
                 props.notes.map((ele, i) => {
                   return (

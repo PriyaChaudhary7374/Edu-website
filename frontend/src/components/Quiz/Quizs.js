@@ -48,7 +48,7 @@ const Quizs = (props) => {
   }
 
   const onChange =(e)=>{
-    setQuiz({...quiz, [e.target.name]: e.target.value}) //whatever value inside the note object will exist as it is but jo properties aage likhi ja rhi hai inko add ya overwrite kar dena
+    setQuiz({...quiz, [e.target.name]: e.target.value}) 
 }
   
   return (
@@ -139,7 +139,7 @@ const Quizs = (props) => {
             name="eoption3" 
             value={quiz.eoption3}
             onChange={onChange}
-            minLength={3} required
+           
             placeholder="Enter the option3"
           />
         </div>
@@ -152,7 +152,7 @@ const Quizs = (props) => {
             name="eoption4" 
             value={quiz.eoption4}
             onChange={onChange}
-            minLength={3} required
+           
             placeholder="Enter the option4"
           />
         </div>

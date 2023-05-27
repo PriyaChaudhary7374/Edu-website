@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const  Blog = require("../models/Blog");
+const shortid=require('shortid')
 
 
 const fetchuser = require("../middleware/fetchuser");
@@ -50,8 +51,13 @@ router.post("/uploadfiles", (req, res) => {
 
 router.post("/createPost", fetchuser,(req, res) => {
     const bookName=req.query.cat
-    let blog = new Blog({ content: req.body.content,user:req.user.id,textbookName:[bookName],chapter:req.body.chapter});
+    let blog = new Blog({ content: req.body.content,user:req.user.id,textbookName:[bookName],chapter:req.body.chapter, isPublic: req.body.isPublic, // Add the isPublic property based on the user's input
+    shareableLink: null,});
     console.log(blog);
+    if (blog.isPublic) {
+        // Generate a unique shareable link if the note is public
+        blog.shareableLink = shortid.generate();
+      }
 
     blog.save((err, postInfo) => {
         if (err) return res.json({ success: false, err });
@@ -99,5 +105,50 @@ router.delete("/removePost/:id", fetchuser,(req, res) => {
             res.status(200).json({ success: true, post })
         })
 });
+
+router.post('/chapters/generate-link',fetchuser,async (req,res) => {
+    try {
+        const bookName=req.query.cat;
+     
+      // Retrieve all public notes for the user
+      const userPublicNotes = await Blog.find({ user: req.user.id, isPublic: true,textbookName:{$in:[bookName]} });
+  
+      if (userPublicNotes.length === 0) {
+        return res.json({ error: 'No public notes found for the user' }); // No public notes found for the user
+      }
+  
+      // Generate a unique sharable link
+      const shareableLink = shortid.generate();
+  
+      // Update the shareableLink field for all the user's public notes
+      await Blog.updateMany(
+        { user: req.user.id, isPublic: true,textbookName:{$in:[bookName]} },
+        { shareableLink:shareableLink }
+      );
+  
+      res.status(200).json(shareableLink);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
+    
+    }
+  });
+  
+  
+  router.get('/chapter/public/:link',fetchuser,async (req, res) => {
+   
+    const userId = req.user.id;
+    const shareableLink = req.params.link; // Assuming you have authentication middleware and user ID is available in req.user
+  
+    try {
+      // Retrieve public notes that belong to the user
+      const publicChapters = await Blog.find({ user: userId, isPublic: true,shareableLink});
+  
+      res.status(200).json(publicChapters);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  });
 
 module.exports = router;

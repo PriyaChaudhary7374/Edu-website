@@ -16,8 +16,27 @@ function BlogPage() {
 
     const [blogs, setBlogs] = useState([])
     const [textbooks, setTextbooks] = useState([]);
+    const [shareableLink, setShareableLink] = useState("");
     const location = useLocation();
     const categoryName = new URLSearchParams(location.search).get('cat');
+
+    const handleGenerateLink = async () => {
+        try {
+         
+          const response = await axios.post(`http://localhost:2000/api/chapters/generate-link/?cat=${categoryName}`,{
+            headers:{
+                'auth-token':localStorage.getItem('token')
+            }
+        });
+          const  shareableLink  = response.data
+          console.log(shareableLink);
+          setShareableLink(shareableLink);
+        } catch (error) {
+          console.log(error);
+          console.error(error);
+         
+        }
+      };
 
     const deletePost=async(id) => {
         // API Call
@@ -32,7 +51,7 @@ function BlogPage() {
                     const newBlogs = blogs.filter((blogs) => { return blogs._id !== id })
                     setBlogs(newBlogs);
                 } else {
-                    alert('Couldnt remove')
+                    alert('Couldnt remove');
                 }
             })
        
@@ -65,7 +84,7 @@ function BlogPage() {
 
                     <a href={`/post/${blog._id}`}> <EllipsisOutlined className="ico" style={{fontSize:'30px'}} /></a>,
                 ]}
-            >   <h2 style={{textAlign:"center"}}><b>{blog.chapter}</b></h2>
+            >   <h2 style={{textAlign:"center"}}><b>{blog.chapter}</b></h2><hr/>
                
                 <div style={{ height: 150, overflowY: 'scroll', marginTop: 10 }}>
                     <div dangerouslySetInnerHTML={{ __html: blog.content }} />
@@ -84,18 +103,34 @@ function BlogPage() {
     })
     
 
-
+    const baseUrl = `http://localhost:3000/chapters/public/`; 
     return (
         <>
         <Navbar/>
         <div style={{ display:'flex' }}>
             <Sidebar/>
             <div style={{ width: '100%', marginLeft: '20px',position:"relative"}}>
-            <h1 style={{color:"blue",textAlign:"center",backgroundColor:"pink"}}>{categoryName}</h1> 
-            
+            <h1 style={{color:"black",textAlign:"center",backgroundColor:"",marginTop:"8px"}}>{categoryName}</h1> 
+            <div style={{display:'flex',flexDirection:'column'}}>
             <button style={{}} className="btn btn-lg btn-primary btn-outline-light my-3">
           <Link to={`/create/?cat=${categoryName}`} className="abcde">Add New Chapter</Link>
               </button>
+              <button style={{backgroundColor: '#4CAF50', /* Green */
+  border: 'none',
+  color: 'white',
+  padding: '10px',
+  textAlign: 'center',
+  textDecoration: 'none',
+  display: 'inline-block',
+  fontSize:'16px',marginLeft:'60px',marginRight:'20px'}} onClick={handleGenerateLink}>Generate Sharable Link</button>
+  </div>
+  {shareableLink && typeof shareableLink === 'string' && (
+        <div style={{textAlign:"center",marginTop:"8px"}}>
+         <a style={{color: 'blue', textDecoration: 'underline'}} href={baseUrl + `${shareableLink}/?cat=${categoryName}`}>{baseUrl + `${shareableLink}/?cat=${categoryName}`}</a>
+          <p style={{color:"red",fontWeight:"bold"}}>Share this link with others to access this textbook's public chapters.</p>
+        </div>
+      )}
+  
             <Row style={{display:"flex",flexWrap:"wrap"}} className="rowse" gutter={[32, 16]}>
                 {renderCards}
             </Row>

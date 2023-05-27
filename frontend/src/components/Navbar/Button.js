@@ -48,7 +48,7 @@ export function Button() {
     { auth? 
     <ul className="profile-ul">
       <img className="avatar-img" src={user.avatarUrl} alt="img" onClick={toggleMenu}/>
-      <div class="sub-menu-wrap" id="subMenu">
+      <div className="sub-menu-wrap" id="subMenu">
                 <div className="sub-menu">
                     <Link to="/profile" className="user-info">
                         See Profile

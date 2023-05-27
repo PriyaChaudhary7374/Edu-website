@@ -45,7 +45,7 @@ function CategoryForm(props) {
                 onChange={handleChange}
                 value={values.name}
                 className="form-control"
-              />
+              />&nbsp;&nbsp;
               <div className="input-group-append">
                 <button type="submit" className="btn btn-outline-secondary">
                   Add

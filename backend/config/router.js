@@ -11,6 +11,8 @@ router.get("/notes/:id", fetchuser, notesController.show);
 router.post("/notes", fetchuser, notesController.create);
 router.put("/notes/:id", fetchuser, notesController.update);
 router.delete("/notes/:id", fetchuser, notesController.destroy);
+router.post("/notes/generate-link",fetchuser, notesController.generatelink);
+router.get("/notes/public/:link",fetchuser,notesController.getpublicnotes)
 
 router.get("/category", fetchuser, categoryController.list);
 router.get("/category/:id", fetchuser, categoryController.show);

@@ -77,8 +77,10 @@ const QuizState = (props) => {
       },
       body: JSON.stringify({question, option1, option2, option3, option4, answer, title, code})
     });
+    console.log(response);
     const json = await response.json(); 
     console.log(json, "UPDATE")
+
 
      let newQuizs = JSON.parse(JSON.stringify(quizs))
     // Logic to edit in client

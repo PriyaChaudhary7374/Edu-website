@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import quizContext from "../../context/quizContext";
 import 'bootstrap/dist/css/bootstrap.css'
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 
 const QuizItem = (props) => {
 const context = useContext(quizContext);
@@ -33,8 +34,8 @@ const { deleteQuiz } = context;
           <div className="row my-1">
             <div className="col">Title : {quiz.title}</div>
           </div>
-          <i className="fa-solid fa-trash mx-2" onClick={()=>{deleteQuiz(quiz._id); props.showAlert("deleted successfully","success")}}></i>
-          <i className="fa-solid fa-file-pen mx-2" onClick={()=>{updateQuiz(quiz)}}></i>
+          <DeleteOutlined style={{fontSize:"25px"}} onClick={()=>{deleteQuiz(quiz._id); props.showAlert("deleted successfully","success")}}/>&nbsp;&nbsp;&nbsp;&nbsp;
+          <EditOutlined style={{fontSize:"25px"}} onClick={()=>{updateQuiz(quiz)}}/>
         </div>
       </div>
     </div>
