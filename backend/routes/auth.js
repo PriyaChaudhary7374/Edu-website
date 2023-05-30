@@ -66,13 +66,12 @@ router.get(
 
       // Redirect the user to the client URL with the token as a query parameter
       res.redirect(
-        `${process.env.CLIENT_URL}?token=${encodeURIComponent(
-          token
-        )}&success=true`
+        `${process.env.CLIENT_URL}?token=${encodeURIComponent(token)}&success=true`
       );
     } catch (err) {
       console.error(err.message);
-      res.status(500).send("Server error");
+      res.status(500).send("Server error")
+      
     }
   }
 );
