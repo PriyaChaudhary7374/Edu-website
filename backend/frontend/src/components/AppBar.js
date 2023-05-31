@@ -77,12 +77,14 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("md")]: {
       display: "flex",
     },
+    textDecoration:"none"
   },
   sectionMobile: {
     display: "flex",
     [theme.breakpoints.up("md")]: {
       display: "none",
     },
+   
   },
 }));
 
@@ -101,17 +103,17 @@ function MainAppBar(props) {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <Link to="/notes">
-              <IconButton aria-label="show 17 new notifications">
-                <NoteIcon color="secondary" />
-              </IconButton>
-            </Link>
+            <Link to="/notes" style={{color:"white"}}>
+              
+                Add Notes
+              
+            </Link>&nbsp;&nbsp;&nbsp;
           </div>
           <div className={classes.sectionDesktop}>
-            <Link to="/category">
-              <IconButton aria-label="show 17 new notifications">
-                <CategoryIcon color="secondary" />
-              </IconButton>
+            <Link className={classes.abc} to="/category" style={{color:"white"}}>
+              
+                Add Category
+              
             </Link>
           </div>
          

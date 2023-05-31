@@ -22,10 +22,12 @@ const UserSchema = new Schema({
     },
     avatarUrl: {
      type:String,
+     required:true,
   
     },
     avatarId:{
       type:String,
+      required:true,
     
     },
     authMethod:{

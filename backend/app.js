@@ -91,12 +91,21 @@ mongoose.connect(process.env.MONGO_URL,
     }
 );
 
+const PORT=process.env.PORT || 2000
+
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET,
   });
-app.listen(process.env.port,()=>{
+
+
+
+  if(process.env.NODE_ENV=='production')
+  {
+    app.use(express.static("frontend/build"));
+  }
+app.listen(PORT,()=>{
     console.log("app listening")
 })
 
