@@ -12,7 +12,7 @@ const Card = ({title,description,imageUrl,newsUrl}) => {
         <div className="cardBody">
             <h5 className="crd-title">{title}...</h5>
             <p className="crd-text">{description}....</p>
-            <a href={newsUrl} target="_blank" className="buton">Read More</a>
+            <a href={newsUrl} target="_blank" rel="noreferrer" className="buton">Read More</a>
         </div>
     </div>
     </>
