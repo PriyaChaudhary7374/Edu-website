@@ -24,4 +24,4 @@ const NoteReducer = (state=[],action)=>{
     }
 }
 
-module.exports = NoteReducer;
+export default NoteReducer;
