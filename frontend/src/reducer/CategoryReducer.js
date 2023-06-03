@@ -23,4 +23,4 @@ const CategoryReducer = (state=[],action)=>{
     }
 }
 
-module.exports = CategoryReducer
+export default CategoryReducer;
