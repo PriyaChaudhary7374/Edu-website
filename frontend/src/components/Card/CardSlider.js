@@ -72,7 +72,7 @@ const CardSlider = (props) => {
       <div className="wrpper">
        
         <div className="flex slider" ref={listRef}>
-      {state.map((element)=>{
+      {articles.map((element)=>{
             return <div className="news-crd" key={element.url}>
             <Card  title={element.title?element.title.slice(0,75):""} description={element.description?element.description.slice(0,100):""} imageUrl={element.urlToImage} newsUrl={element.url}/>
             </div> 
