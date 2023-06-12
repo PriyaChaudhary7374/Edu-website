@@ -2,7 +2,7 @@ import quizContext from "./quizContext";
 import { useState } from "react";
 
 const QuizState = (props) => {
-  const host = "http://localhost:2000"
+  const host = "https://edu-website-nl5i.onrender.com"
   const quizsInitial = []
   const [quizs, setQuizs] = useState(quizsInitial)
   const countquizs=0;

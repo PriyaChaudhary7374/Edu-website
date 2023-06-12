@@ -51,7 +51,7 @@ function Notes(props) {
     const handleGenerateLink = async () => {
       try {
        
-        const response = await axios.post(`http://localhost:2000/api/notes/generate-link`,{
+        const response = await axios.post(`https://edu-website-nl5i.onrender.com/api/notes/generate-link`,{
           headers:{
               'auth-token':localStorage.getItem('token')
           }

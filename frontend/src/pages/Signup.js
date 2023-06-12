@@ -53,7 +53,7 @@ const previewFile = (file) => {
    
     const {name, email, password} = credential
     // console.log(credential);
-    const response = await fetch("http://localhost:2000/api/auth/createuser", {
+    const response = await fetch("https://edu-website-nl5i.onrender.com/api/auth/createuser", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

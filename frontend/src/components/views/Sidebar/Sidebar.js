@@ -17,7 +17,7 @@ export default function Sidebar() {
          name:newTextbook
        }
          
-        axios.post('http://localhost:2000/api/bookName',variables,{
+        axios.post('https://edu-website-nl5i.onrender.com/api/bookName',variables,{
            headers: {
                 'auth-token':localStorage.getItem('token'),
             }

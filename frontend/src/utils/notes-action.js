@@ -27,7 +27,7 @@ export const deleteNotes = (notes)=>{
 
 export const startGetNotes = (dispatch)=>{
     return(dispatch)=>{
-        axios.get('http://localhost:2000/api/notes',{
+        axios.get('https://edu-website-nl5i.onrender.com/api/notes',{
             headers:{
                 'auth-token':localStorage.getItem('token')
         }})
@@ -42,7 +42,7 @@ export const startGetNotes = (dispatch)=>{
 export const startPostNotes = (formdata)=>{
     console.log(formdata)
     return(dispatch)=>{
-        axios.post('http://localhost:2000/api/notes',formdata,{
+        axios.post('https://edu-website-nl5i.onrender.com/api/notes',formdata,{
             headers:{
                 'auth-token':localStorage.getItem('token')
         }})
@@ -57,7 +57,7 @@ export const startPostNotes = (formdata)=>{
 
 export const startDeleteNotes = (id)=>{
     return(dispatch)=>{
-        axios.delete(`http://localhost:2000/api/notes/${id}`,{
+        axios.delete(`https://edu-website-nl5i.onrender.com/api/notes/${id}`,{
             headers:{
                 'auth-token':localStorage.getItem('token')
             }
@@ -70,7 +70,7 @@ export const startDeleteNotes = (id)=>{
 }
 export const startEditNotes = (formdata,id)=>{
     return(dispatch)=>{
-        axios.put(`http://localhost:2000/api/notes/${id}`,formdata,{
+        axios.put(`https://edu-website-nl5i.onrender.com/api/notes/${id}`,formdata,{
             headers:{
                 'auth-token':localStorage.getItem('token')
             }

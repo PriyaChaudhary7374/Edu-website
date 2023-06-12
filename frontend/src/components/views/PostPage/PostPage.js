@@ -14,7 +14,7 @@ function PostPage(props) {
 
         const variable = { postId: postId }
 
-        axios.post('http://localhost:2000/api/getPost',variable, {
+        axios.post('https://edu-website-nl5i.onrender.com/api/getPost',variable, {
             headers:{
                 'auth-token':localStorage.getItem('token')
             } 

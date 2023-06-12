@@ -20,7 +20,7 @@ export const editCategory = (formData, id) => {
 
 export const startGetCategory = (dispatch)=>{
     return (dispatch)=>{
-            Axios.get('http://localhost:2000/api/category',{
+            Axios.get('https://edu-website-nl5i.onrender.com/api/category',{
             headers:{
                 'auth-token':localStorage.getItem('token')
             }
@@ -34,7 +34,7 @@ export const startGetCategory = (dispatch)=>{
 }
 export const startPostCategory = (formdata)=>{
     return (dispatch)=>{
-            Axios.post('http://localhost:2000/api/category',formdata,{
+            Axios.post('https://edu-website-nl5i.onrender.com/api/category',formdata,{
             headers:{
                 'auth-token':localStorage.getItem('token')
             }
@@ -49,7 +49,7 @@ export const startPostCategory = (formdata)=>{
 
 export const startRemoveCategory=(id)=>{
     return (dispatch)=>{
-        Axios.delete(`http://localhost:2000/api/category/${id}`,{
+        Axios.delete(`https://edu-website-nl5i.onrender.com/api/category/${id}`,{
             headers:{
                 'auth-token':localStorage.getItem('token')
             }
@@ -66,7 +66,7 @@ export const startRemoveCategory=(id)=>{
 export const startCategoryEdit = (formData, id) => {
     return (dispatch) => {
       Axios
-        .put(`http://localhost:2000/api/category/${id}`, formData, {
+        .put(`https://edu-website-nl5i.onrender.com/api/category/${id}`, formData, {
           headers: {
             "auth-token": localStorage.getItem("token"),
           },

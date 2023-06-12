@@ -1,6 +1,6 @@
 export const api = {  
-    tagsEndPoint: 'http://localhost:2000/api/tags/',
-    usersEndPoint: 'http://localhost:2000/api/auth/',
-    postsEndPoint: 'http://localhost:2000/api/posts/',
-    repliesEndPoint: 'http://localhost:2000/api/reply/',
+    tagsEndPoint: 'https://edu-website-nl5i.onrender.com/api/tags/',
+    usersEndPoint: 'https://edu-website-nl5i.onrender.com/api/auth/',
+    postsEndPoint: 'https://edu-website-nl5i.onrender.com/api/posts/',
+    repliesEndPoint: 'https://edu-website-nl5i.onrender.com/api/reply/',
   }

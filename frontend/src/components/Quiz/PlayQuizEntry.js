@@ -36,7 +36,7 @@ const PlayQuizEntry = () => {
   const fetchallquiz = async() => {
    
     
-    const response = await fetch(`http://localhost:2000/api/quiz/fetchallquiznoauthentication/${message}`, {
+    const response = await fetch(`https://edu-website-nl5i.onrender.com/api/quiz/fetchallquiznoauthentication/${message}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

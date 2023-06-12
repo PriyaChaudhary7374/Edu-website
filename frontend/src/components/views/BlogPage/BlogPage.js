@@ -23,7 +23,7 @@ function BlogPage() {
     const handleGenerateLink = async () => {
         try {
          
-          const response = await axios.post(`http://localhost:2000/api/chapters/generate-link/?cat=${categoryName}`,{
+          const response = await axios.post(`https://edu-website-nl5i.onrender.com/api/chapters/generate-link/?cat=${categoryName}`,{
             headers:{
                 'auth-token':localStorage.getItem('token')
             }

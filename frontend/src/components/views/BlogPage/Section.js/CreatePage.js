@@ -43,7 +43,7 @@ function CreatePage(props) {
         }
         
 
-        axios.post(`http://localhost:2000/api/createPost/?cat=${categoryName}`,variables,{
+        axios.post(`https://edu-website-nl5i.onrender.com/api/createPost/?cat=${categoryName}`,variables,{
             headers:{
                 'auth-token':localStorage.getItem('token')
             } 

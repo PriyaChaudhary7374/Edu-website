@@ -45,7 +45,7 @@ const PublicNotes = () => {
 
   useEffect(() => {
     // Make a request to the backend API to retrieve public notes
-    axios.get(`http://localhost:2000/api/notes/public/${shareableLink}`)
+    axios.get(`https://edu-website-nl5i.onrender.com/api/notes/public/${shareableLink}`)
       .then(response => {
         setPublicNotes(response.data);
       })

@@ -27,7 +27,7 @@ const Editprofile = (props) => {
   const userinfo = async () => {
     
    
-    const response = await fetch("http://localhost:2000/api/auth/getuser", {
+    const response = await fetch("https://edu-website-nl5i.onrender.com/api/auth/getuser", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -32,7 +32,7 @@ const PublicNotes = () => {
 
   useEffect(() => {
     // Make a request to the backend API to retrieve public notes
-    axios.get(`http://localhost:2000/api/chapter/public/${shareableLink}`)
+    axios.get(`https://edu-website-nl5i.onrender.com/api/chapter/public/${shareableLink}`)
       .then(response => {
         setPublicChapters(response.data);
       })
