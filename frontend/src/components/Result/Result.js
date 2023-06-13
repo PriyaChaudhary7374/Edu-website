@@ -38,7 +38,7 @@ export default function Result() {
     ,[])
 
     const getQuizResults = async (quizCode) => {
-        const response = await fetch(`http://localhost:2000/api/result/${quizCode}`, {
+        const response = await fetch(`https://edu-website-nl5i.onrender.com/api/result/${quizCode}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
