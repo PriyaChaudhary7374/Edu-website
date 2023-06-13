@@ -87,7 +87,7 @@ function Notes(props) {
   const handleTogglePublic = () => {
     setShowPublic((prevShowPublic) => !prevShowPublic);
   };
-  const baseUrl = "http://localhost:3000/notes/public/"; 
+  const baseUrl = "https://6487535d882f3300ad3a0c73--steady-toffee-4d65c7.netlify.app/notes/public/"; 
 
   return (
     <>

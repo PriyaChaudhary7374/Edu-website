@@ -46,7 +46,7 @@ export default function Sidebar() {
     useEffect(() => {
         const getTextbooks = async (e) => {
            
-            const res = await axios.get("http://localhost:2000/api/bookName",{
+            const res = await axios.get("https://edu-website-nl5i.onrender.com/api/bookName",{
             headers: {
                 'auth-token':localStorage.getItem('token'),
             }

@@ -40,7 +40,7 @@ function BlogPage() {
 
     const deletePost=async(id) => {
         // API Call
-       await axios.delete(`http://localhost:2000/api/removePost/${id}`, {
+       await axios.delete(`https://edu-website-nl5i.onrender.com/api/removePost/${id}`, {
         
           headers: { 
            
@@ -58,7 +58,7 @@ function BlogPage() {
       }
 
     useEffect(() => {
-        axios.get(`http://localhost:2000/api/getBlogs/?cat=${categoryName}`,{
+        axios.get(`https://edu-website-nl5i.onrender.com/api/getBlogs/?cat=${categoryName}`,{
             headers:{
                 'auth-token':localStorage.getItem('token')
             } 
@@ -96,14 +96,14 @@ function BlogPage() {
     useEffect(() => {
         const getTextbooks = async (e) => {
            
-            const res = await axios.get("http://localhost:2000/api/bookName")
+            const res = await axios.get("https://edu-website-nl5i.onrender.com/api/bookName")
             setTextbooks(res.data)
         }
         getTextbooks();
     })
     
 
-    const baseUrl = `http://localhost:3000/chapters/public/`; 
+    const baseUrl = `https://6487535d882f3300ad3a0c73--steady-toffee-4d65c7.netlify.app/chapters/public/`; 
     return (
         <>
         <Navbar/>
