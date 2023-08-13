@@ -7,13 +7,7 @@ import imagee from "../images/google.jpeg"
 
 const Signup = (props) => {
 
-  const googleAuth = () => {
-    console.log('error');
-		window.open(
-			`http://localhost:2000/api/auth/google/callback`,
-			"_self"
-		);
-	};
+  
   const [credential, setcredential] = useState({ name:"", email: "", password: "", confirmpassword:"" });
   const [fileInputState, setFileInputState] = useState('');
   const [previewSource, setPreviewSource] = useState(image);
@@ -165,10 +159,7 @@ const previewFile = (file) => {
                       className="updateProfileBtn"
                     />
 
-<button className="google-btn" onClick={googleAuth}>
-						<img src={imagee} alt="google icon" />
-						<span>Sign up with Google</span>
-					</button>
+
                   </form>
                   
                 </div>
